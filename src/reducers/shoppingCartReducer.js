@@ -4,10 +4,10 @@ const shoppingCartSlice = createSlice({
 	name: "shoppingCart",
 	initialState: [],
 	reducers: {
-		addToCart(state, action) {
+		addItemToCart(state, action) {
 			state.push(action.payload)
 		},
-		removeFromCart(state, action) {
+		removeItemFromCart(state, action) {
 			return state.filter((product) => product.id  !== action.payload)
 		},
 		clearCart(state) { // hope this works!!
@@ -16,5 +16,5 @@ const shoppingCartSlice = createSlice({
 	}
 })
 
-export const { addToCart, removeFromCart, clearCart } = shoppingCartSlice.actions
+export const { addItemToCart, removeItemFromCart, clearCart } = shoppingCartSlice.actions
 export default shoppingCartSlice.reducer

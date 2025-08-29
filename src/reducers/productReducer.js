@@ -7,7 +7,7 @@ const productSlice = createSlice({
 	reducers: {
 		setProducts(state, action) {
 			return action.payload
-		} // TODO addNew, Remove, change existing
+		} // TODO addNew, Remove, change existing, Get by id
 	}
 })
 

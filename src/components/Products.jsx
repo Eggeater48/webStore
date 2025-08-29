@@ -1,11 +1,15 @@
 //import { useDispatch, useSelector } from "react-redux";
 import {useState} from "react";
+
 import Product from "./Product.jsx"
+import {Link, useNavigate} from "react-router-dom";
 //import {useEffect} from "react";
 //import {initialProducts} from "../reducers/productReducer.js";
 
 const Products = () => {
+	const navigate = useNavigate()
 	//const productList = useSelector((state) => state.products)
+	//const dispatch = useDispatch()
 	const [productList, setProductList] = useState([
 		{
 			"id": 1,
@@ -1804,20 +1808,31 @@ const Products = () => {
 			"thumbnail": "https://cdn.dummyjson.com/product-images/groceries/kiwi/thumbnail.webp"
 		}
 	]) // DO NOT OPEN ME IN ANY CIRCUMSTANCE!!!
-	//const dispatch = useDispatch()
+	// DO NOT OPEN!! DO NOT OPEN!!
+	// Contains all the "fake" data from dummyJSON
+	// IDK WHY ITS IN A STATE !!
+	// CHANGE TO USESELECTOR (YES THAT ONE THAT IS UP THERE COMMENTED OUT !!)
 
 	/*useEffect(() => {
 		dispatch(initialProducts())
 	}, [])*/
 
+	const onSelect = (event) => {
+		event.preventDefault()
+		console.log(event.target)
+		//navigate(`/${}`)
+	}
+
 	return (
-		<div className={"flex flex-row"}>
-			{productList.map(product=>
-				<Product
-					key={product.id}
-					productData={product} />
-			)}
-		</div>
+		<>
+			<div className={"flex flex-row"}>
+				{productList.map(product=>
+					<div key={product.id} onClick={onSelect}>
+						<Link to={`/${product.id}`} className={""} >{product.title}</Link>
+					</div>
+				)}
+			</div>
+		</>
 	)
 }
 
