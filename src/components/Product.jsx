@@ -1,9 +1,25 @@
-const Product = ({ productData }) => {
+import { useDispatch } from "react-redux";
+import {use} from "react";
+import {addItemToCart} from "../reducers/shoppingCartReducer.js";
+
+const Product = ({ productData, reviewAverage }) => {
 	//TODO make a function that calculates the average of the products reviews
+	const dispatch = useDispatch()
 
 	const addToCart = (event) => {
+		// TODO send title, price, availabilityStatus, warrantyInformation and shippingInformation to the shoppingCartReducer
 		event.preventDefault()
+		dispatch(addItemToCart(
+			{
+				title: productData.title,
+				price: productData.price,
+				availability: productData.availabilityStatus,
+				warranty: productData.warrantyInformation,
+				shipping: productData.shippingInformation
+			}
+		))
 	}
+
 
 	return ( // className={"relative h-32 w-32"}
 		<div>
@@ -16,7 +32,7 @@ const Product = ({ productData }) => {
 			</div>
 
 			<div>
-				TODO review avg
+				{reviewAverage(productData)}/5
 			</div>
 
 			<div>
@@ -24,7 +40,7 @@ const Product = ({ productData }) => {
 			</div>
 
 			<div onClick={addToCart}>
-				<img src={"/assets/shopping_cart_add.png"} alt={'atc'} />
+				<img src={"/assets/shopping_cart_add.png"} alt={'add to cart'} />
 			</div>
 
 		</div>

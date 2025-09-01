@@ -10,6 +10,7 @@ const Products = () => {
 	const navigate = useNavigate()
 	//const productList = useSelector((state) => state.products)
 	//const dispatch = useDispatch()
+
 	const [productList, setProductList] = useState([
 		{
 			"id": 1,
@@ -1823,7 +1824,8 @@ const Products = () => {
 		//navigate(`/${}`)
 	}
 
-	return (
+	// The link component should follow the same kind of design as the Product.jsx one, with different styling ofc!
+	return ( // TODO change the Link element to a div and setup that damn onSelect function with the navigate!!
 		<>
 			<div className={"flex flex-row"}>
 				{productList.map(product=>

@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import Product from "./components/Product.jsx";
 import {useState} from "react";
+import ShoppingCart from "./components/ShoppingCart.jsx";
+
+//TODO change the import order cuz its kinda disturbing right now
 
 function App() {
   const [productList, setProductList] = useState([
@@ -1810,6 +1813,14 @@ function App() {
     }
   ]) // DO NOT OPEN ME IN ANY CIRCUMSTANCE!!!
 
+  const calculateAverage = (product) => {
+    const reviewList = product.reviews.map(review =>
+      review.rating
+    )
+
+    return (reviewList.reduce((a, b) => a + b, 0 ) / reviewList.length).toFixed(1)
+  }
+
   const match = useMatch('/:id')
 
   const product = match
@@ -1819,8 +1830,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Products /> } />
-        <Route path='/:id' element={<Product productData={product} />} />
+        <Route path='/' element={<Products reviewAverage={calculateAverage} /> } />
+        <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} />} />
+        <Route path='/cart' element={<ShoppingCart />} />
       </Routes>
     </>
   )

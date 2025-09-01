@@ -4,7 +4,7 @@ import productService from "../services/products.js"
 const productSlice = createSlice({
 	name: "products",
 	initialState: [],
-	reducers: {
+	reducers: { // TODO maybe only send different parts of the data to different functions, such as in the initialProducts thing down there!!
 		setProducts(state, action) {
 			return action.payload
 		} // TODO addNew, Remove, change existing, Get by id
