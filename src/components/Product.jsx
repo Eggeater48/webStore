@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import {use} from "react";
 import {addItemToCart} from "../reducers/shoppingCartReducer.js";
 
 const Product = ({ productData, reviewAverage }) => {
@@ -11,6 +10,7 @@ const Product = ({ productData, reviewAverage }) => {
 		event.preventDefault()
 		dispatch(addItemToCart(
 			{
+				id: productData.id,
 				title: productData.title,
 				price: productData.price,
 				availability: productData.availabilityStatus,
@@ -19,7 +19,6 @@ const Product = ({ productData, reviewAverage }) => {
 			}
 		))
 	}
-
 
 	return ( // className={"relative h-32 w-32"}
 		<div>
@@ -42,7 +41,6 @@ const Product = ({ productData, reviewAverage }) => {
 			<div onClick={addToCart}>
 				<img src={"/assets/shopping_cart_add.png"} alt={'add to cart'} />
 			</div>
-
 		</div>
 	)
 }
