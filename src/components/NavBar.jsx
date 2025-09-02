@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 	return ( // TODO maybe change this into a <nav> element (not sure what difference that has really)
@@ -16,9 +17,9 @@ const NavBar = () => {
 				Im the login button!!
 			</div>
 
-			<div>
-				Im the shopping cart!!
-			</div>
+			<button className={""}>
+				Press me to open the shopping cart!!
+			</button>
 
 		</div>
 	)

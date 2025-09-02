@@ -6,7 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 //import {useEffect} from "react";
 //import {initialProducts} from "../reducers/productReducer.js";
 
-const Products = () => {
+const Products = ({ reviewAverage }) => {
 	const navigate = useNavigate()
 	//const productList = useSelector((state) => state.products)
 	//const dispatch = useDispatch()
@@ -1820,17 +1820,42 @@ const Products = () => {
 
 	const onSelect = (event) => {
 		event.preventDefault()
-		console.log(event.target)
-		//navigate(`/${}`)
+		//navigate(`/${product.id}`)
+	}
+
+	const onAdd = (event) => {
+		event.preventDefault()
 	}
 
 	// The link component should follow the same kind of design as the Product.jsx one, with different styling ofc!
-	return ( // TODO change the Link element to a div and setup that damn onSelect function with the navigate!!
+	return (
 		<>
 			<div className={"flex flex-row"}>
 				{productList.map(product=>
-					<div key={product.id} onClick={onSelect}>
-						<Link to={`/${product.id}`} className={""} >{product.title}</Link>
+					<div key={product.id} className={"flex flex-col"}>
+						<img
+							src={product.images[0]}
+							alt={product.title}
+							className={"relative w-48 h-48"}
+						/>
+
+						<div className={""}>
+							{product.title}
+						</div>
+
+						<div className={""}>
+							{reviewAverage(product)}
+						</div>
+
+						<div className={""}>
+							{product.price}
+						</div>
+
+						<img
+							src={"src/assets/shopping_cart.png"}
+							alt={"Add me to cart!!"}
+							className={"rounded-full w-12 h-12 "}
+						/>
 					</div>
 				)}
 			</div>
