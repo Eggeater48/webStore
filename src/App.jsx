@@ -1829,6 +1829,8 @@ function App() {
 
   return (
     <>
+      <NavBar />
+
       <Routes>
         <Route path='/' element={<Products reviewAverage={calculateAverage} /> } />
         <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} />} />

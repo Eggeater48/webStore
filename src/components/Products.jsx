@@ -1,13 +1,14 @@
-//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {useState} from "react";
 
 import Product from "./Product.jsx"
-import {Link, useNavigate} from "react-router-dom";
-//import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {addItemToCartButBetter} from "../reducers/shoppingCartReducer.js";
 //import {initialProducts} from "../reducers/productReducer.js";
 
 const Products = ({ reviewAverage }) => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	//const productList = useSelector((state) => state.products)
 	//const dispatch = useDispatch()
 
@@ -1818,44 +1819,51 @@ const Products = ({ reviewAverage }) => {
 		dispatch(initialProducts())
 	}, [])*/
 
-	const onSelect = (event) => {
-		event.preventDefault()
-		//navigate(`/${product.id}`)
+	const onSelect = (product) => {
+		console.log('Selected!!', )
+		navigate(`/${product.id}`)
 	}
 
-	const onAdd = (event) => {
-		event.preventDefault()
+	const onAdd = (product) => {
+		dispatch(addItemToCartButBetter({
+			...product,
+			count: 1
+		}))
 	}
 
+	// TODO Change icon onAdd maybe
+	// Yes this is a scuffed solution for such a simple problem... But tbh i dont really care atp...
 	// The link component should follow the same kind of design as the Product.jsx one, with different styling ofc!
 	return (
 		<>
-			<div className={"flex flex-row"}>
+			<div className={"flex flex-col"}>
 				{productList.map(product=>
-					<div key={product.id} className={"flex flex-col"}>
-						<img
-							src={product.images[0]}
-							alt={product.title}
-							className={"relative w-48 h-48"}
-						/>
+					<div key={product.id} className={"flex"}>
+						<div onClick={() => {onSelect(product)} }>
+							<img
+								src={product.images[0]}
+								alt={product.title}
+								className={"relative w-48 h-48"}
+							/>
 
-						<div className={""}>
-							{product.title}
-						</div>
+							<div className={""}>
+								{product.title}
+							</div>
 
-						<div className={""}>
-							{reviewAverage(product)}
-						</div>
+							<div className={""}>
+								{reviewAverage(product)}
+							</div>
 
-						<div className={""}>
-							{product.price}
-						</div>
-
-						<img
-							src={"src/assets/shopping_cart.png"}
-							alt={"Add me to cart!!"}
-							className={"rounded-full w-12 h-12 "}
-						/>
+							<div className={""}>
+								{product.price}
+							</div>
+					</div>
+						<button onClick={() => {onAdd(product)}} className={"rounded-full w-12 h-12 "}>
+							<img
+								src={"src/assets/shopping_cart.png"}
+								alt={"Add me to cart!!"}
+							/>
+						</button>
 					</div>
 				)}
 			</div>

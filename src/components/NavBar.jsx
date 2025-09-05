@@ -1,23 +1,26 @@
-import { Link } from "react-router"
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+	const navigate = useNavigate()
+
+	const onLogoPress = () => { // Just returns to the home page
+		navigate('/')
+	}
+
+	const onShoppingCartPress = () => {
+		navigate('/cart')
+	}
+
 	return ( // TODO maybe change this into a <nav> element (not sure what difference that has really)
-		<div className={"relative grid border-b-black h-15 w-screen "}>
+		<div className={"relative flex flex-col border-b-black h-15 w-screen "}>
+			<img
+				alt={'Site logo'}
+				src={'/src/assets/mowl.png'}
+				className={"relative w-12 h-12"}
+				onClick={onLogoPress}
+			/>
 
-			<div >
-				Im supposed to be the site logo!!
-			</div>
-
-			<div className={"relative h-7 w-15 bg-gray-100 "}>
-				Im a searchBar (in the future!!)
-			</div>
-
-			<div>
-				Im the login button!!
-			</div>
-
-			<button className={""}>
+			<button onClick={onShoppingCartPress} className={""}>
 				Press me to open the shopping cart!!
 			</button>
 
