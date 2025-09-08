@@ -16,11 +16,11 @@ const NavBar = () => {
 			<img
 				alt={'Site logo'}
 				src={'/src/assets/mowl.png'}
-				className={"relative w-12 h-12"}
+				className={"relative w-12 h-12 animate-bounce"}
 				onClick={onLogoPress}
 			/>
 
-			<button onClick={onShoppingCartPress} className={""}>
+			<button onClick={onShoppingCartPress} className={"animate-bounce"}>
 				Press me to open the shopping cart!!
 			</button>
 

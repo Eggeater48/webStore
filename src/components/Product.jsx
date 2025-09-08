@@ -7,12 +7,7 @@ const Product = ({ productData, reviewAverage }) => {
 
 	const addToCart = (event) => {
 		event.preventDefault()
-		dispatch(addItemToCartButBetter(
-			{
-				...productData,
-				count: 1
-			}
-		))
+		dispatch(addItemToCartButBetter(productData))
 	}
 
 	return ( // className={"relative h-32 w-32"}

@@ -39,7 +39,7 @@ const ShoppingCart = () => {
 					</button>
 				</div>
 				:
-				<div>
+				<div className={"animate-spin"}>
 					The cart is empty...
 				</div>
 			}

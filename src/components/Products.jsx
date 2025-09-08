@@ -1825,10 +1825,7 @@ const Products = ({ reviewAverage }) => {
 	}
 
 	const onAdd = (product) => {
-		dispatch(addItemToCartButBetter({
-			...product,
-			count: 1
-		}))
+		dispatch(addItemToCartButBetter(product))
 	}
 
 	// TODO Change icon onAdd maybe
@@ -1839,7 +1836,7 @@ const Products = ({ reviewAverage }) => {
 			<div className={"flex flex-col"}>
 				{productList.map(product=>
 					<div key={product.id} className={"flex"}>
-						<div onClick={() => {onSelect(product)} }>
+						<div onClick={() => {onSelect(product)}} className={"animate-bounce"}>
 							<img
 								src={product.images[0]}
 								alt={product.title}

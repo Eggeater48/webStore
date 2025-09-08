@@ -8,7 +8,7 @@ const productSlice = createSlice({
 		setProducts(state, action) {
 			return action.payload
 		} // TODO addNew, Remove, change existing, Get by id
-	}
+	} // TODO also add adding, changing or removing reviews
 })
 
 export const initialProducts = () => {
