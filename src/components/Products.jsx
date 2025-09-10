@@ -1,16 +1,16 @@
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
 import Product from "./Product.jsx"
 import {useNavigate} from "react-router-dom";
-import {addItemToCartButBetter} from "../reducers/shoppingCartReducer.js";
+import {addItemToCartButBetter, increaseItemsCount} from "../reducers/shoppingCartReducer.js";
 //import {initialProducts} from "../reducers/productReducer.js";
 
 const Products = ({ reviewAverage }) => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	//const productList = useSelector((state) => state.products)
-	//const dispatch = useDispatch()
+	const shoppingCart = useSelector((state) => state.shoppingCart)
 
 	const [productList, setProductList] = useState([
 		{
@@ -1813,7 +1813,6 @@ const Products = ({ reviewAverage }) => {
 	// DO NOT OPEN!! DO NOT OPEN!!
 	// Contains all the "fake" data from dummyJSON
 	// IDK WHY ITS IN A STATE !!
-	// CHANGE TO USESELECTOR (YES THAT ONE THAT IS UP THERE COMMENTED OUT !!)
 
 	/*useEffect(() => {
 		dispatch(initialProducts())
@@ -1825,7 +1824,13 @@ const Products = ({ reviewAverage }) => {
 	}
 
 	const onAdd = (product) => {
-		dispatch(addItemToCartButBetter(product))
+		const isItReal = shoppingCart.find(({ id }) => id === product.id)
+
+		if (isItReal === undefined) {
+			dispatch(addItemToCartButBetter(product))
+		} else {
+			dispatch(increaseItemsCount(product.id))
+		}
 	}
 
 	// TODO Change icon onAdd maybe

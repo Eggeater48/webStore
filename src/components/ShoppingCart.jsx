@@ -26,6 +26,10 @@ const ShoppingCart = () => {
 						<div key={item.id} className={""}>
 							<div>{item.title}</div>
 							<div>{item.price}</div>
+							{item.count > 1 &&
+								<div>
+									{item.count}
+								</div>}
 
 							<button onClick={() => {onRemove(item.id)}}>Press me to remove this item from the cart!!</button>
 						</div>
