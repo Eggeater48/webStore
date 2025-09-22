@@ -12,20 +12,11 @@ const shoppingCartSlice = createSlice({ // Products could be put into window.loc
 		},
 		increaseItemsCount(state, action) {
 			return state.map(product => {
-				return product.id !== action.payload ? product : action.payload
+				return product.id !== action.payload ? {...product, count: product.count++} : action.payload
 			})
 		},
 	}
 })
-
-export const addItemToCartButBetter = (product) => {
-	return async (dispatch) => {
-		dispatch(addItemToCart({ //TODO if item is already in cart, just increase the count amount by 1.. should be simple enough to implement 😊
-			...product,
-			count: 1
-		}))
-	}
-}
 
 export const { addItemToCart, removeItemFromCart, increaseItemsCount } = shoppingCartSlice.actions
 export default shoppingCartSlice.reducer

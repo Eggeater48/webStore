@@ -3,7 +3,7 @@ import {useState} from "react";
 
 import Product from "./Product.jsx"
 import {useNavigate} from "react-router-dom";
-import {addItemToCartButBetter, increaseItemsCount} from "../reducers/shoppingCartReducer.js";
+import {addItemToCart, increaseItemsCount} from "../reducers/shoppingCartReducer.js";
 //import {initialProducts} from "../reducers/productReducer.js";
 
 const Products = ({ reviewAverage }) => {
@@ -1825,17 +1825,19 @@ const Products = ({ reviewAverage }) => {
 
 	const onAdd = (product) => {
 		const isItReal = shoppingCart.find(({ id }) => id === product.id)
-
+		console.log(isItReal)
 		if (isItReal === undefined) {
-			dispatch(addItemToCartButBetter(product))
+			dispatch(addItemToCart({
+				...product,
+				count: 1
+			}))
+
 		} else {
 			dispatch(increaseItemsCount(product.id))
 		}
 	}
 
 	// TODO Change icon onAdd maybe
-	// Yes this is a scuffed solution for such a simple problem... But tbh i dont really care atp...
-	// The link component should follow the same kind of design as the Product.jsx one, with different styling ofc!
 	return (
 		<>
 			<div className={"flex flex-col"}>
