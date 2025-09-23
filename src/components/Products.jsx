@@ -3,7 +3,7 @@ import {useState} from "react";
 
 import Product from "./Product.jsx"
 import {useNavigate} from "react-router-dom";
-import {addItemToCart, increaseItemsCount} from "../reducers/shoppingCartReducer.js";
+import {addItemToCart, increaseItemsCount, incrementItemCount} from "../reducers/shoppingCartReducer.js";
 //import {initialProducts} from "../reducers/productReducer.js";
 
 const Products = ({ reviewAverage }) => {
@@ -1825,19 +1825,16 @@ const Products = ({ reviewAverage }) => {
 
 	const onAdd = (product) => {
 		const isItReal = shoppingCart.find(({ id }) => id === product.id)
-		console.log(isItReal)
 		if (isItReal === undefined) {
 			dispatch(addItemToCart({
 				...product,
 				count: 1
 			}))
-
 		} else {
-			dispatch(increaseItemsCount(product.id))
+			dispatch(incrementItemCount(product.id))
 		}
 	}
 
-	// TODO Change icon onAdd maybe
 	return (
 		<>
 			<div className={"flex flex-col"}>

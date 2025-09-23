@@ -12,11 +12,22 @@ const shoppingCartSlice = createSlice({ // Products could be put into window.loc
 		},
 		increaseItemsCount(state, action) {
 			return state.map(product => {
-				return product.id !== action.payload ? {...product, count: product.count++} : action.payload
+				return product.id !== action.payload.id ? product : action.payload
 			})
 		},
 	}
 })
+
+export const incrementItemCount = (product) => {
+	return async dispatch => { // TODO find product in state, return it here, increment its count field by 1
+		const updatedProduct = { // TODO fix the product that is sent here is one without the count field
+			...product,
+			count: product.count + 1
+		}
+
+		await dispatch(increaseItemsCount(updatedProduct))
+	}
+}
 
 export const { addItemToCart, removeItemFromCart, increaseItemsCount } = shoppingCartSlice.actions
 export default shoppingCartSlice.reducer

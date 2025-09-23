@@ -12,6 +12,14 @@ const NavBar = () => {
 				onClick={() => navigate('/')}
 			/>
 
+			<div className={""}>
+				Im a search bar
+			</div>
+
+			<div className={""}>
+				Im supposed to log you in or out
+			</div>
+
 			<button onClick={() => navigate('/cart')} className={"animate-bounce"}>
 				Press me to open the shopping cart!!
 			</button>
