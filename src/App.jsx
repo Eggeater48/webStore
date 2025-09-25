@@ -10,10 +10,15 @@ import {
 import Product from "./components/Product.jsx";
 import {useState} from "react";
 import ShoppingCart from "./components/ShoppingCart.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {addItemToCart, incrementItemCount} from "./reducers/shoppingCartReducer.js";
 
 //TODO change the import order cuz its kinda disturbing right now
 
 function App() {
+  const shoppingCart = useSelector(state => state.shoppingCart)
+  const dispatch = useDispatch()
+
   const [productList, setProductList] = useState([
     {
       "id": 1,
@@ -1821,6 +1826,25 @@ function App() {
     return (reviewList.reduce((a, b) => a + b, 0 ) / reviewList.length).toFixed(1)
   }
 
+  const totalReviews = (product) => {
+    return product.reviews.map(review =>
+      review.rating
+    ).length
+  }
+
+  const addToCart = (product) => {
+    const isItReallyInTheCart = shoppingCart.find(({ id }) => id === product.id)
+
+    if (isItReallyInTheCart === undefined) {
+      dispatch(addItemToCart({
+        ...product,
+        count: 1
+      }))
+    } else {
+      dispatch(incrementItemCount(isItReallyInTheCart))
+    }
+  }
+
   const match = useMatch('/:id')
 
   const product = match
@@ -1832,8 +1856,8 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route path='/' element={<Products reviewAverage={calculateAverage} /> } />
-        <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} />} />
+        <Route path='/' element={<Products reviewAverage={calculateAverage} addToCart={addToCart} totalReviews={totalReviews} /> } />
+        <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} addToCart={addToCart}  />} />
         <Route path='/cart' element={<ShoppingCart />} />
       </Routes>
     </>

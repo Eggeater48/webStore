@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit"
 //TODO update array objects to be like {productdata(here), count: of the times it has been added to avoid duplicate keys when rendering in the shopping cart}
 const shoppingCartSlice = createSlice({ // Products could be put into window.localstorage.. If we're feeling fancy
 	name: "shoppingCart",
@@ -19,8 +19,8 @@ const shoppingCartSlice = createSlice({ // Products could be put into window.loc
 })
 
 export const incrementItemCount = (product) => {
-	return async dispatch => { // TODO find product in state, return it here, increment its count field by 1
-		const updatedProduct = { // TODO fix the product that is sent here is one without the count field
+	return async dispatch => {
+		const updatedProduct = {
 			...product,
 			count: product.count + 1
 		}

@@ -1,14 +1,5 @@
-import { useDispatch } from "react-redux";
-import {addItemToCart} from "../reducers/shoppingCartReducer.js";
-
-const Product = ({ productData, reviewAverage }) => {
-	const dispatch = useDispatch()
-
-	const addToCart = (event) => {
-		event.preventDefault()
-		dispatch(addItemToCart(productData))
-	}
-
+const Product = ({ productData, reviewAverage, addToCart }) => {
+	// TODO add reviewing, make this look decent at least !!
 	return ( // className={"relative h-32 w-32"}
 		<div>
 			<div className={"relative w-40 h-40"}>

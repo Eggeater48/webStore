@@ -1,16 +1,12 @@
-import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
 import Product from "./Product.jsx"
 import {useNavigate} from "react-router-dom";
-import {addItemToCart, increaseItemsCount, incrementItemCount} from "../reducers/shoppingCartReducer.js";
 //import {initialProducts} from "../reducers/productReducer.js";
 
-const Products = ({ reviewAverage }) => {
+const Products = ({ reviewAverage, addToCart, totalReviews }) => {
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 	//const productList = useSelector((state) => state.products)
-	const shoppingCart = useSelector((state) => state.shoppingCart)
 
 	const [productList, setProductList] = useState([
 		{
@@ -1823,53 +1819,47 @@ const Products = ({ reviewAverage }) => {
 		navigate(`/${product.id}`)
 	}
 
-	const onAdd = (product) => {
-		const isItReal = shoppingCart.find(({ id }) => id === product.id)
-		if (isItReal === undefined) {
-			dispatch(addItemToCart({
-				...product,
-				count: 1
-			}))
-		} else {
-			dispatch(incrementItemCount(product.id))
-		}
-	}
+	//TODO make reviews text part disappear if there is no reviews!!
 
 	return (
 		<>
-			<div className={"flex flex-col"}>
+			<div className={"flex flex-row flex-wrap gap-2.5"}>
 				{productList.map(product=>
-					<div key={product.id} className={"flex"}>
-						<div onClick={() => {onSelect(product)}} className={"animate-bounce"}>
-							<img
-								src={product.images[0]}
-								alt={product.title}
-								className={"relative w-48 h-48"}
-							/>
+					<div key={product.id} className={"flex flex-col"}>
+						<div className={"h-72 w-48 outline-1 outline-solid"}>
+							<div onClick={() => {onSelect(product)}}>
+								<img
+									src={product.images[0]}
+									alt={product.title}
+									className={"relative w-48 h-48"}
+								/>
 
-							<div className={""}>
-								{product.title}
+								<div className={""}>
+									{product.title}
+								</div>
+
+								<div className={""}>
+									{reviewAverage(product)} {totalReviews(product)} reviews
+								</div>
+
+								<div className={""}>
+									{product.price}
+								</div>
 							</div>
 
-							<div className={""}>
-								{reviewAverage(product)}
-							</div>
-
-							<div className={""}>
-								{product.price}
-							</div>
-					</div>
-						<button onClick={() => {onAdd(product)}} className={"rounded-full w-12 h-12 "}>
-							<img
-								src={"src/assets/shopping_cart.png"}
-								alt={"Add me to cart!!"}
-							/>
-						</button>
+							<button className={"rounded-full w-12 h-12 "} onClick={() => {addToCart(product)}}>
+								<img
+									src={"src/assets/shopping_cart.png"}
+									alt={"Add me to cart!!"}
+								/>
+							</button>
+						</div>
 					</div>
 				)}
 			</div>
 		</>
 	)
 }
+
 
 export default Products
