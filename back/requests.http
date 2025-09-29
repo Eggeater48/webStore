@@ -1,0 +1,12 @@
+### Gets all the products (like the name implies!!)
+# @name getAllProducts
+GET localhost:3000/api/products/getAll
+
+### Adds a new products, as the name says!
+# @name addNewProduct
+POST localhost:3000/api/products/addNew
+Content-Type: application/json
+
+{
+
+}
