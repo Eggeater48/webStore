@@ -3,13 +3,13 @@ const bcrypt = require('bcryptjs')
 const userRouter = require('express').Router()
 const User = require('../models/User')
 
-userRouter.get('/getAll', async (request, response) => {
+userRouter.get('/', async (request, response) => {
 	const result = User.find({})
 	response.json(result)
 })
 
 userRouter.post('/createNew', async (request, response) => {
-	const { username, password } = request.body
+	const { username, name, password } = request.body
 
 	if (password.length < 5) {
 		response.status(400).json({'error' : 'The password is too short (atleast 5 letters)'}).end()
@@ -18,7 +18,7 @@ userRouter.post('/createNew', async (request, response) => {
 
 		const user = new User({
 			username,
-			password,
+			name,
 			passwordHash
 		})
 		// Has to be saved here cuz otherwise it just skips saving if you put it at the end of line 20!!

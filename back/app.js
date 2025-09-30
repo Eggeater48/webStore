@@ -9,15 +9,23 @@ const productRouter = require('./controllers/products')
 const userRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
-// Middleware goes here
+const middleware = require('./utils/middleware')
+const mongoose = require("mongoose");
 
-// Mongoose boot and connection check goes here
+mongoose.set("strictQuery", false)
+
+mongoose.connect(config.MONGODB_URL)
+	.then(() => {
+		console.log('Successfully connected to MongoDB')
+	})
+	.catch((error) => {
+		console.error('Couldnt connect to MongoDB ', error.message)
+	})
 
 app.use(cors())
 app.use(express.json())
 
-// middleware use goes here
-
+app.use(middleware.requestLogger)
 app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)

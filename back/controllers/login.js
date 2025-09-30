@@ -1,14 +1,13 @@
 const loginRouter = require('express').Router()
 const bcrypt = require('bcryptjs')
-//const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
-// This route should only handle logging in
-// Could also implement login tokens if i want to
+const User = require('../models/User')
 
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
 
-	const user = await User.findOne()
+	const user = await User.findOne({ username })
 
 	const passwordCorrect = user === null
 		? false
@@ -20,9 +19,7 @@ loginRouter.post('/', async (request, response) => {
 		}).end()
 	}
 
-	response.status(200).send({username: user.username, name: user.name, id: user._id })
-
-	/*const userForToken = {
+	const userForToken = {
 		username: user.username,
 		id: user._id
 	}
@@ -31,8 +28,9 @@ loginRouter.post('/', async (request, response) => {
 		userForToken,
 		process.env.SECRET,
 		{ expiresIn: 60*60 }
-	) // 1 hour */
+	) // 1 hour
 
+	response.status(200).send({username: user.username, name: user.name, id: user._id, superSecretToken: token })
 })
 
 module.exports = loginRouter

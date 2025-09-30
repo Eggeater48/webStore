@@ -6,7 +6,25 @@ GET localhost:3000/api/products/getAll
 # @name addNewProduct
 POST localhost:3000/api/products/addNew
 Content-Type: application/json
+Authorization:
 
 {
 
 }
+
+### Adds a new user, like the name says once again
+# @name AddNewUser
+POST localhost:3000/api/users/createNew
+Content-Type: application/json
+
+{
+  "username": "Test_Greg",
+  "name": "Greg",
+  "password": "123456"
+}
+
+### Gets all the user data
+# @name GetAllUserData
+GET localhost:3000/api/users
+
+
