@@ -1,6 +1,6 @@
 const productRouter = require('express').Router()
+const Product = require('../models/Products')
 
-// Models go here
 
 // Middleware import goes here
 
@@ -11,9 +11,17 @@ productRouter.get('/getAll', async (request, response) => {
 	response.json(result)
 })
 
-// Add new product
+productRouter.post('/addNew', async (request, response) => {
+	co
+})
 
-// Remove product
+productRouter.delete('/deleteOne/:id', async (request, response) => {
+
+})
+
+productRouter.put('/changeItem/:id', async (request, response) => {
+
+})
 
 // Change existing
 // adding reviews should come with changeExisting
