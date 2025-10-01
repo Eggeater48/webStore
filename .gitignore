@@ -7,12 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Some random stuff that i dont want to be committed
 front/node_modules
+/back/requests.http
+.env
+
 dist
 dist-ssr
 *.local
 package-lock.json
-.env
 
 # Editor directories and files
 .vscode/*
