@@ -28,6 +28,8 @@ const productSchema = new mongoose.Schema({
 	},
 	images: [],
 	thumbnail: String
+}, {
+	timestamps: true
 })
 
 productSchema.set('toJSON', {

@@ -1,3 +1,5 @@
+import Reviews from "./Reviews.jsx";
+
 const Product = ({ productData, reviewAverage, addToCart }) => {
 	// TODO add reviewing, make this look decent at least !!
 	return ( // className={"relative h-32 w-32"}
@@ -21,6 +23,9 @@ const Product = ({ productData, reviewAverage, addToCart }) => {
 			<div onClick={addToCart}>
 				<img src={"/assets/shopping_cart_add.png"} alt={'add to cart'} />
 			</div>
+
+			<Reviews productData={productData} />
+
 		</div>
 	)
 }

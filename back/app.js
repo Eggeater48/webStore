@@ -24,9 +24,10 @@ mongoose.connect(config.MONGODB_URL)
 
 app.use(cors())
 app.use(express.json())
-
 app.use(middleware.requestLogger)
+
 app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
+
 module.exports = app

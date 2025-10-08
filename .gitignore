@@ -8,8 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Some random stuff that i dont want to be committed
-front/node_modules
-/back/requests.http
 .env
 
 dist

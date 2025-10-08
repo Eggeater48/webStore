@@ -14,8 +14,7 @@ const productSlice = createSlice({
 export const initialProducts = () => {
 	return async (dispatch) => {
 		const result = await productService.getAll()
-		console.log(result.products)
-		dispatch(setProducts(result.products))
+		dispatch(setProducts(result))
 	}
 }
 

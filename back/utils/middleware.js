@@ -1,11 +1,12 @@
 //const jwt = require('jsonwebtoken')
 
-// TODO add token
-
 const requestLogger = (request, response, next) => {
-	console.log('Method | ', request.method)
+	console.log('--------')
+	console.log('Method |', request.method)
 	console.log('Path   |', request.path)
 	console.log('Body   |', request.body)
+	console.log('Date   |', new Date().toISOString()) // Please fix me someday.. I want to display the date with the correct timezone
+	console.log('--------')
 	next()
 }
 
