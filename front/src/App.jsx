@@ -54,13 +54,12 @@ function App() {
   const match = useMatch('/:id')
 
   const product = match
-    ? console.log(productList.find(product => product.id === Number(match.params.id)))
+    ? productList.find(product => product.id === match.params.id)
     : null
 
   return (
     <>
       <NavBar />
-
 
       <Routes>
         <Route path='/' element={<Products reviewAverage={calculateAverage} addToCart={addToCart} totalReviews={totalReviews} /> } />
