@@ -1,7 +1,7 @@
 import Reviews from "./Reviews.jsx";
-
+//import { Await, useLoaderData } from "react-router-dom";
+// Just change to using those if the small nitpick doesn't get fixed
 const Product = ({ productData, reviewAverage, addToCart }) => {
-	// TODO add reviewing, make this look decent at least !!
 	return ( // className={"relative h-32 w-32"}
 		<div>
 			<div className={"relative w-40 h-40"}>

@@ -1,4 +1,3 @@
-//import Product from "./Product.jsx"
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {initialProducts} from "../reducers/productReducer.js";
@@ -11,7 +10,7 @@ const Products = ({ reviewAverage, addToCart, totalReviews }) => {
 
 	useEffect(() => {
 		dispatch(initialProducts())
-	}, [])
+	}, [dispatch])
 
 	const onSelect = (product) => {
 		navigate(`/${product.id}`)

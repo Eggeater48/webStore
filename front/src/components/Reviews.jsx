@@ -1,5 +1,7 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import { Form, Field } from 'react-final-form'
+//import {addNewReview} from "../reducers/productReducer.js";
 
 const Reviews = ({ productData }) => {
 	const [showForm, setShowForm] = useState(false)
@@ -9,39 +11,81 @@ const Reviews = ({ productData }) => {
 		setShowForm(!showForm)
 	}
 
-	const onSubmit = async (event) => {
-		event.preventDefault()
-		// send a put request to the backend
-		// Sends the product but with the new review appended to product.reviews
+	const onSubmit = async values => {
+		console.log(values) // TODO should also send the currently logged in users name and email aswell!!
+		// For future reference values are rating and comment right now!!
+		//dispatch(addNewReview())
 	}
-
-	// Input range feels kinda silly to use, but i guess it works for now
-	// the rating has to look something like this
-	// { rating : 1, date: iso8601 timestamp, reviewerName, reviewerEmail }
 
 	return (
 		<>
 			{showForm &&
-				<div>
-					<div onClick={theClick}>Cancel writing</div>
-					<input type={'range'} min={'1'} max={'5'} step={'1'} />
+				<Form
+					onSubmit={onSubmit}
+					render={({ handleSubmit, form, submitting, pristine, values }) => (
+						<form onSubmit={handleSubmit}>
+							<div className={''}>
+								<label>Rating</label>
+								<Field
+									name={'rating'}
+									component={'input'}
+									type={'range'}
+									min={'1'}
+									max={'5'}
+									step={'1'}
+									defaultValue={'3'}
+								/>
+							</div>
 
-					<form onSubmit={onSubmit}>
+							<div className={''}>
+								<Field
+									name={'comment'}
+									component={'input'}
+									type={'text'}
+									placeholder={''}
+									maxLength={'250'}
+								/>
+							</div>
 
-					</form>
-				</div>
+							<button
+								type={'submit'} disabled={submitting || pristine}
+								className={''}
+							>
+								Submit the thing
+							</button>
+
+							<button
+								type={"button"}
+								onClick={form.reset}
+								disabled={submitting || pristine}
+								className={''}
+							>
+								I reset the form!!
+							</button>
+
+						</form>
+					)}
+				/>
 			}
 
 			{!showForm &&
-				<div onClick={theClick}></div>
+				<div onClick={theClick}>Write a review</div>
 			}
 
 			<div>
 				{productData.reviews.map((review)=>
-					<div>
-						<div>{review.reviewerName}</div>
-						<div>{review.rating}</div>
-						<div>{review.date}</div>
+					<div className={'flex w-60 h-48 outline-1 outline-solid'}>
+						<div>
+							{review.reviewerName}
+						</div>
+
+						<div>
+							{review.rating}
+						</div>
+
+						<div>
+							{review.date}
+						</div>
 					</div>
 				)}
 			</div>

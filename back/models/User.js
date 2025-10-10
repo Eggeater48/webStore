@@ -7,10 +7,22 @@ const userSchema = new mongoose.Schema({
 		minLength: [3, 'The username is too short'],
 		unique: true
 	},
-	name: String,
-	email: String,
+	name: {
+		type: String,
+		required: true
+	},
+	email: {
+		type: String,
+		required: true
+	},
+	reviews: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		}
+	],
+
 	passwordHash: String,
-	userType: String
 })
 
 userSchema.set('toJSON', {

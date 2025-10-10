@@ -3,7 +3,6 @@ import NavBar from "./components/NavBar.jsx"
 import {
   Routes,
   Route,
-  Link,
   useMatch,
 } from "react-router-dom";
 import Product from "./components/Product.jsx";
@@ -22,7 +21,7 @@ function App() {
 
   useEffect(() => {
     dispatch(initialProducts())
-  }, [])
+  }, [dispatch])
 
   const calculateAverage = (product) => {
     const reviewList = product.reviews.map(review =>
@@ -52,7 +51,6 @@ function App() {
   }
 
   const match = useMatch('/:id')
-
   const product = match
     ? productList.find(product => product.id === match.params.id)
     : null
