@@ -11,6 +11,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {addItemToCart, incrementItemCount} from "./reducers/shoppingCartReducer.js";
 import {initialProducts} from "./reducers/productReducer.js";
 import {useEffect} from "react";
+import LoginScreen from "./components/LoginScreen.jsx";
+import SignUpScreen from "./components/SignUpScreen.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -63,6 +65,9 @@ function App() {
         <Route path='/' element={<Products reviewAverage={calculateAverage} addToCart={addToCart} totalReviews={totalReviews} /> } />
         <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} addToCart={addToCart}  />} />
         <Route path='/cart' element={<ShoppingCart />} />
+
+        <Route path='/login' element={<LoginScreen />} />
+        <Route path='/signup' element={<SignUpScreen />} />
       </Routes>
     </>
   )

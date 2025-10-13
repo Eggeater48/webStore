@@ -8,6 +8,7 @@ const createNewUser = async credentials => {
 
 const login = async credentials => {
 	const response = await axios.post(`${baseURL}/login`)
+	return response.data
 }
 
 export default {

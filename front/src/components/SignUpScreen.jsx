@@ -1,22 +1,19 @@
 import { Form, Field } from 'react-final-form'
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {handierLoginHandler} from "../reducers/userReducer.js";
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 
-	const handleLogin = (userDetails) => {
-		dispatch(handierLoginHandler(userDetails))
+	const handleSignUp = (userDetails) => {
+		console.log(userDetails)
 	}
 
 	return (
 		<Form
-			onSubmit={handleLogin}
+			onSubmit={handleSignUp}
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
 				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle'}>
-					<div>
+					<div className={''}>
 						<Field
 							name={'username'}
 							component={'input'}
@@ -25,9 +22,18 @@ const LoginScreen = () => {
 						/>
 					</div>
 
-					<div>
+					<div className={''}>
 						<Field
-							name={'password'}
+							name={'email'}
+							component={'input'}
+							type={'text'}
+							placeholder={'Email'}
+						/>
+					</div>
+
+					<div className={''}>
+						<Field
+							name={''}
 							component={'input'}
 							type={'password'}
 							placeholder={'Password'}
@@ -38,15 +44,17 @@ const LoginScreen = () => {
 						type={'submit'} disabled={submitting || pristine}
 						className={''}
 					>
-						Submit the deets
+						Submit the thing
 					</button>
 
-					<button className={''} onClick={() => navigate('/signup')} type={'button'}>
-						Signup instead...
+					<button onClick={() => navigate('/login')} type={'button'}>
+						Log in
 					</button>
+
 				</form>
 			)}
 		/>
 	)
 }
-export default LoginScreen
+
+export default SignUpScreen
