@@ -7,11 +7,16 @@ const createNewUser = async credentials => {
 }
 
 const login = async credentials => {
-	const response = await axios.post(`${baseURL}/login`)
+	const response = await axios.post(`${baseURL}/login`, credentials)
 	return response.data
+}
+
+const addProductToWishlist = async details => {
+	const response = await axios.post(`${baseURL}/`)
 }
 
 export default {
 	createNewUser,
-	login
+	login,
+	addProductToWishlist
 }

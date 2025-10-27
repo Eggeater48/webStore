@@ -7,7 +7,7 @@ const getAll = async () => {
 }
 
 const addNew = async newProduct => {
-	const token = 3
+	const token = 3 // Fix this at some point
 	const response = await axios.post(`${baseUrl}/addNew`, newProduct, {
 		headers : {
 			'Authorization' : `Bearer ${token}`

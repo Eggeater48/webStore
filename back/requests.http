@@ -75,8 +75,9 @@ POST localhost:3000/api/users/createNew
 Content-Type: application/json
 
 {
-  "username": "Test_Greg",
+  "username": "evil greg",
   "name": "Greg",
+  "email": "greg@greg.com",
   "password": "123456"
 }
 
@@ -87,5 +88,5 @@ Content-Type: application/json
 
 {
   "username": "Test_Greg",
-  "password": "123456"
+  "password": "12345"
 }

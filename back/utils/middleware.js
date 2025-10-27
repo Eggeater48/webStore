@@ -1,12 +1,14 @@
 //const jwt = require('jsonwebtoken')
 
+const logger = require('./logger')
+
 const requestLogger = (request, response, next) => {
-	console.log('--------')
-	console.log('Method |', request.method)
-	console.log('Path   |', request.path)
-	console.log('Body   |', request.body)
-	console.log('Date   |', new Date().toISOString()) // Please fix me someday.. I want to display the date with the correct timezone
-	console.log('--------')
+	logger.info('--------')
+	logger.info('Method |', request.method)
+	logger.info('Path   |', request.path)
+	logger.info('Body   |', request.body)
+	logger.info('Date   |', new Date().toISOString()) // Please fix me someday.. I want to display the date with the correct timezone
+	logger.info('--------')
 	next()
 }
 
@@ -16,7 +18,7 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
 	if (error.name === 'CastError') {
-		console.log(error.stack)
+		logger.error(error.stack)
 		return response.status(400).send({ error: 'malformatted id' })
 	} else if (error.name === 'ValidationError') {
 		return response.status(400).json({ error: error.message})
