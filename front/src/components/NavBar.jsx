@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
 	const navigate = useNavigate()
+	const user = useSelector((state) => state.user)
 
 	return ( // TODO fix the positioning on this.. its really bad at the moment!!
-		<div className={"relative flex flex-col border-b-black h-15 w-screen "}>
+		<div className={"relative flex flex-row border-b-black h-15 w-screen "}>
 			<img
 				alt={'Site logo'}
 				src={'/src/assets/mowl.png'}
@@ -21,10 +23,23 @@ const NavBar = () => {
 				<input type={"text"} onChange={() => console.log('ello')} />
 			</div>
 
-			<button onClick={() => navigate('/cart')} className={"animate-bounce"}>
+			<button onClick={() => navigate('/cart')} className={"top-0"}>
 				Press me to open the shopping cart!!
 			</button>
 
+			{user ? 
+				<div className={""} onClick={() => navigate('/wishlist')}>
+					Yo
+				</div>
+			 :
+				<button onClick={() => navigate('/login')} className={"top-0"}>
+					<img 
+						alt={"Login"}
+						src={"/src/assets/login_icon.png"}
+						className={""}
+					/>
+				</button>
+			}
 		</div>
 	)
 }

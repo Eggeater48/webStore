@@ -4,6 +4,13 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
 
+/*
+Lets you login
+@auth none
+@route POST /api/login
+@body { username, password }
+@return { username, name, id, superSecretToken }
+*/
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
 

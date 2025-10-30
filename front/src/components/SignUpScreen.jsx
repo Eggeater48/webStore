@@ -1,11 +1,26 @@
 import { Form, Field } from 'react-final-form'
 import {useNavigate} from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import userService from "../services/userService.js";
+import { useState } from "react";
 
 const SignUpScreen = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const [errorMessage, setErrorMessage] = useState(null)
 
-	const handleSignUp = (userDetails) => {
-		console.log(userDetails)
+	const handleSignUp = async (userDetails) => {
+		const result = await userService.createNewUser(userDetails)
+
+		if (result === undefined) {
+			setTimeout(() => {
+				setErrorMessage('Signup failed. Please try again.')
+			}, 5000)
+			setErrorMessage('null')
+		} else { // TODO test this and then finish this implementation!
+			dispatch(setUser(result))
+			navigate('/')
+		}
 	}
 
 	return (
@@ -13,12 +28,25 @@ const SignUpScreen = () => {
 			onSubmit={handleSignUp}
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
 				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle'}>
+					{errorMessage &&
+					<div className={''}>{errorMessage}</div>
+					}
+
 					<div className={''}>
 						<Field
 							name={'username'}
 							component={'input'}
 							type={'text'}
 							placeholder={'Username'}
+						/>
+					</div>
+
+					<div className={''}>
+						<Field
+							name={'name'}
+							component={'input'}
+							type={'text'}
+							placeholder={'Name'}
 						/>
 					</div>
 
@@ -33,7 +61,7 @@ const SignUpScreen = () => {
 
 					<div className={''}>
 						<Field
-							name={''}
+							name={'password'}
 							component={'input'}
 							type={'password'}
 							placeholder={'Password'}

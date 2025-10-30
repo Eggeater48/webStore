@@ -2,17 +2,24 @@ import axios from "axios";
 const baseURL = 'http://localhost:3000/api'
 
 const createNewUser = async credentials => {
-	const response = await axios.post(`${baseURL}/api/createNew`, credentials)
+	const response = await axios.post(`${baseURL}/users/createNew`, credentials).catch(function (error) {
+		return error.response.data
+	})
 	return response.data
 }
 
 const login = async credentials => {
-	const response = await axios.post(`${baseURL}/login`, credentials)
+	const response = await axios.post(`${baseURL}/login`, credentials).catch(function (error) {
+		return error.response.data
+	})
 	return response.data
 }
 
 const addProductToWishlist = async details => {
-	const response = await axios.post(`${baseURL}/`)
+	const response = await axios.post(`${baseURL}/users/addToWishlist/${details.userId}`, details.productId).catch(function (error) {
+		return error.response.data
+	})
+	return response.data
 }
 
 export default {

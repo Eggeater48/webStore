@@ -13,6 +13,7 @@ import {initialProducts} from "./reducers/productReducer.js";
 import {useEffect} from "react";
 import LoginScreen from "./components/LoginScreen.jsx";
 import SignUpScreen from "./components/SignUpScreen.jsx";
+import Wishlist from "./components/Wishlist.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -58,7 +59,7 @@ function App() {
     : null
 
   return (
-    <>
+    <div classname={'w-screen h-screen'}>
       <NavBar />
 
       <Routes>
@@ -68,8 +69,10 @@ function App() {
 
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignUpScreen />} />
+
+        <Route path='/wishlist' element={<Wishlist />} />
       </Routes>
-    </>
+    </div>
   )
 }
 

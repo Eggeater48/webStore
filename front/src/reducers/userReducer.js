@@ -3,26 +3,20 @@ import userService from "../services/userService.js";
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: null, // name, username, id, email and an array containing the id's of the products the user has reviewed..
+	initialState: {}, // name, username, id, email and an array containing the id's of the products the user has reviewed..
 	reducers: {
 		setUser(state, action) {
+			console.log(action)
 			return action.payload
 		},
 		clearUser(state) {
 			state.user = null
 		},
+		setWishlist(state, action) {
+			state.wishlist.append(action.payload) 
+		}
 	}
 })
-
-export const handierLoginHandler = (userDetails) => {
-	return async (dispatch) => {
-		// Im supposed to also add the user from window.localstorage
-		console.log(userDetails)
-		const result = await userService.login(userDetails)
-		console.log(result)
-		//dispatch(setUser(userDetails))
-	}
-}
 
 export const handierLogoutHandler = () => {
 	return async (dispatch) => {
@@ -31,13 +25,13 @@ export const handierLogoutHandler = () => {
 	}
 }
 
-export const addToWishlist = (productAndUserDeets) => {
+export const addToWishlist = (userId, productId) => {
 	return async (dispatch) => {
-		//dispatch()
-		//userService.addProductToWishlist()
-		console.log(productAndUserDeets)
+		dispatch(setWishlist(productId))
+		const result = userService.addProductToWishlist(userId, productId)
+		console.log(result)
 	}
 }
 
-export const { setUser, clearUser } = userSlice.actions
+export const { setUser, clearUser, setWishlist } = userSlice.actions
 export default userSlice.reducer

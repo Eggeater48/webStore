@@ -23,12 +23,12 @@ const Products = ({ reviewAverage, addToCart, totalReviews }) => {
 		if (!user) {
 			navigate('/login')
 		} else if (productList.find(product => product.id === productId)) {	
-			console.log('Productg is already in wishlist') // This part could be handled better, since im not entirely sure about how this interaction is handled
+			console.log('Product is already in your wishlist') // This part could be handled better, since im not entirely sure about how this interaction is handled
 		}	else {
-			dispatch(addToWishlist({
-				"userId": user.id,
-				"productId": productId
-			}))
+			dispatch(addToWishlist(
+				user.id,
+				productId
+			))
 		}
 	}
 	//TODO make reviews text part disappear if there is no reviews!!
@@ -72,7 +72,6 @@ const Products = ({ reviewAverage, addToCart, totalReviews }) => {
 				</div>
 			)}
 		</div>
-
 	)
 }
 
