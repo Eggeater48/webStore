@@ -6,7 +6,6 @@ const userSlice = createSlice({
 	initialState: {}, // name, username, id, email and an array containing the id's of the products the user has reviewed..
 	reducers: {
 		setUser(state, action) {
-			console.log(action)
 			return action.payload
 		},
 		clearUser(state) {

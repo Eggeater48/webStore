@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const NavBar = () => {
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
+	// The user ball element thing could have a dropdown menu when the user is logged in...
 
 	return ( // TODO fix the positioning on this.. its really bad at the moment!!
 		<div className={"relative flex flex-row border-b-black h-15 w-screen "}>

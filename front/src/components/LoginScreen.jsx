@@ -1,6 +1,6 @@
 import { Form, Field } from 'react-final-form'
 import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import userService from '../services/userService';
 import { useState } from "react";
 import {setUser} from "../reducers/userReducer.js";
@@ -9,7 +9,6 @@ const LoginScreen = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [errorMessage, setErrorMessage] = useState(null)
-	const user = useSelector(state => state.user)
 
 	const handleLogin = async (userDetails) => {
 		const result = await userService.login(userDetails)
@@ -21,7 +20,7 @@ const LoginScreen = () => {
 			setErrorMessage('null')
 		} else {
 			dispatch(setUser(result))
-			//navigate('/')
+			navigate('/')
 		}
 	}
 

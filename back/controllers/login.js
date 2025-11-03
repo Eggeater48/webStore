@@ -13,7 +13,7 @@ Lets you login
 */
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
-
+	// Could probably do something with email as well, but i dont really feel like implementing that at the moment
 	const user = await User.findOne({ username })
 
 	const passwordCorrect = user === null
@@ -37,7 +37,10 @@ loginRouter.post('/', async (request, response) => {
 		{ expiresIn: 60*60 }
 	) // 1 hour
 
-	response.status(200).send({username: user.username, name: user.name, id: user._id, superSecretToken: token })
+	response
+		.status(200)
+		.send(
+			{username: user.username, name: user.name, email: user.email, id: user._id, superSecretToken: token})
 })
 
 module.exports = loginRouter
