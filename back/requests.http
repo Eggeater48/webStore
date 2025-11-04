@@ -90,3 +90,19 @@ Content-Type: application/json
   "username": "Bog",
   "password": "EggEating"
 }
+
+### Adds an item to a certain users wishlist
+# @name addToWishlist
+POST localhost:3000/api/users/wishlist/addToWishlist/
+Content-Type: application/json
+Authorization: {{superSecretBearerToken}}
+
+{
+  "user": "69030aec684fd9f2b72f411c",
+  "productId": "68dd1431471489c8f924fd01"
+}
+
+### Gets the wishlist of a certain user
+# @name getWishlist
+GET localhost:3000/api/users/wishlist/69030aec684fd9f2b72f411c
+Authorization: {{superSecretBearerToken}}

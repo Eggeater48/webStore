@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import userService from "../services/userService.js";
 
 const userSlice = createSlice({
 	name: "user",
@@ -16,21 +15,6 @@ const userSlice = createSlice({
 		}
 	}
 })
-
-export const handierLogoutHandler = () => {
-	return async (dispatch) => {
-		dispatch(clearUser())
-		 // Remove the user from localstorage here as well..
-	}
-}
-
-export const addToWishlist = (userId, productId) => {
-	return async (dispatch) => {
-		dispatch(setWishlist(productId))
-		const result = userService.addProductToWishlist(userId, productId)
-		console.log(result)
-	}
-}
 
 export const { setUser, clearUser, setWishlist } = userSlice.actions
 export default userSlice.reducer

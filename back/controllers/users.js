@@ -40,17 +40,35 @@ userRouter.post('/createNew', async (request, response, next) => {
 /*
 Adds an item to the wishlist array of the user
 @auth none
-@route POST /api/users/addToWishlist/:id
-@body { productId }
+@route POST /api/users/addToWishlist/
+@body { userID, productId }
 @return { updated user object }
 */
 // There probably should be some auth here but...
-userRouter.post('/addToWishlist/:id', async (request, response) => {
-	const user = User.findById(request.params.id)
+userRouter.post('/wishlist/addToWishlist/', async (request, response) => {
+	const user = User.findById(request.user)
 
-	user.wishlist.append(request.body) 
+	user.wishlist.append(request.params.id)
 
 	console.log(user)
+})
+
+/*
+Just returns an users wishlist
+@auth none
+@route GET /api/users/:id
+@return { wishlist }
+*/
+// TODO remember to add token verification to this part
+userRouter.get('/wishlist/', async (request, response, next) => {
+	try {
+		const users = await User
+			.findById(request.user)
+			.populate('wishlist', { title: 1, price: 1, images: 1 })
+		response.json(users)
+	} catch (error) {
+		next(error)
+	}
 })
 
 module.exports = userRouter

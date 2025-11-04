@@ -1,7 +1,13 @@
 import Reviews from "./Reviews.jsx";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+
 //import { Await, useLoaderData } from "react-router-dom";
 // Just change to using those if the small nitpick doesn't get fixed
-const Product = ({ productData, reviewAverage, addToCart }) => {
+const Product = ({ productData, reviewAverage, addToCart, addToWishlist }) => {
+	const user = useSelector((state) => state.user)
+	const navigate = useNavigate()
+
 	return ( // className={"relative h-32 w-32"}
 		<div>
 			<div className={"relative w-40 h-40"}>
@@ -23,6 +29,8 @@ const Product = ({ productData, reviewAverage, addToCart }) => {
 			<div onClick={addToCart}>
 				<img src={"/assets/shopping_cart_add.png"} alt={'add to cart'} />
 			</div>
+
+
 
 			<Reviews productData={productData} />
 

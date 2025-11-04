@@ -6,6 +6,14 @@ const NavBar = () => {
 	const user = useSelector((state) => state.user)
 	// The user ball element thing could have a dropdown menu when the user is logged in...
 
+	const goToWishlist = () => {
+		if (!user) {
+			navigate('/login')
+		} else {
+			navigate('/wishlist')
+		}
+	}
+
 	return ( // TODO fix the positioning on this.. its really bad at the moment!!
 		<div className={"relative flex flex-row border-b-black h-15 w-screen "}>
 			<img
@@ -29,7 +37,7 @@ const NavBar = () => {
 			</button>
 
 			{user ? 
-				<div className={""} onClick={() => navigate('/wishlist')}>
+				<div className={""} onClick={goToWishlist}>
 					Yo
 				</div>
 			 :

@@ -14,9 +14,12 @@ const userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 	}, 
-	wishlist: { // TODO decide if you want to populate this or just search with id in the review component
-		type: Array
-	},
+	wishlist: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		}
+	],
 	passwordHash: String,
 })
 

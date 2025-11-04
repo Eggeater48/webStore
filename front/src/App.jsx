@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar.jsx"
 import {
   Routes,
   Route,
-  useMatch,
+  useMatch, useNavigate,
 } from "react-router-dom";
 import Product from "./components/Product.jsx";
 import ShoppingCart from "./components/ShoppingCart.jsx";
@@ -14,13 +14,17 @@ import {useEffect} from "react";
 import LoginScreen from "./components/LoginScreen.jsx";
 import SignUpScreen from "./components/SignUpScreen.jsx";
 import Wishlist from "./components/Wishlist.jsx";
+import {setWishlist} from "./reducers/userReducer.js";
+import userService from "./services/userService.js";
 
 //TODO change the import order cuz its kinda disturbing right now
 
 function App() {
   const shoppingCart = useSelector(state => state.shoppingCart)
   const productList = useSelector(state => state.products)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(initialProducts())
@@ -53,18 +57,31 @@ function App() {
     }
   }
 
+  const addToWishlist = async (productId) => {
+    console.log(`Adding product at id ${productId} to wishlist`)
+    if (!user) {
+      navigate('/login')
+    } else if (productList.find(product => product.id === productId)) {
+      console.log('Product is already in your wishlist') // This part could be handled better, since im not entirely sure about how this interaction is handled
+    }	else {
+      dispatch(setWishlist([...user.wishlist, productId]))
+      const result = await userService.addProductToWishlist(productId)
+      console.log(result)
+    }
+  }
+
   const match = useMatch('/:id')
   const product = match
     ? productList.find(product => product.id === match.params.id)
     : null
 
   return (
-    <div classname={'w-screen h-screen'}>
+    <div className={'w-screen h-screen'}>
       <NavBar />
 
       <Routes>
-        <Route path='/' element={<Products reviewAverage={calculateAverage} addToCart={addToCart} totalReviews={totalReviews} /> } />
-        <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} addToCart={addToCart}  />} />
+        <Route path='/' element={<Products reviewAverage={calculateAverage} addToCart={addToCart} totalReviews={totalReviews} addToWishlist={addToWishlist} /> } />
+        <Route path='/:id' element={<Product productData={product} reviewAverage={calculateAverage} addToCart={addToCart} addToWishlist={addToWishlist}  />} />
         <Route path='/cart' element={<ShoppingCart />} />
 
         <Route path='/login' element={<LoginScreen />} />
