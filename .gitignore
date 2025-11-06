@@ -14,10 +14,10 @@ dist
 dist-ssr
 *.local
 package-lock.json
-/front/package-lock.json
-/front/node_modules
-/back/package-lock.json
-/back/node_modules
+/front/package-lock.json/
+/front/node_modules/
+/back/package-lock.json/
+/back/node_modules/
 /back/http-client.private.env.json
 
 # Editor directories and files
