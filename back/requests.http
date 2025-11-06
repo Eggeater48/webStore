@@ -75,7 +75,7 @@ POST localhost:3000/api/users/createNew
 Content-Type: application/json
 
 {
-  "username": "evil greg",
+  "username": "Grög",
   "name": "Greg",
   "email": "greg@greg.com",
   "password": "123456"
@@ -87,22 +87,16 @@ POST localhost:3000/api/login
 Content-Type: application/json
 
 {
-  "username": "Bog",
-  "password": "EggEating"
+  "username": "Grög",
+  "password": "123456"
 }
 
 ### Adds an item to a certain users wishlist
 # @name addToWishlist
-POST localhost:3000/api/users/wishlist/addToWishlist/
-Content-Type: application/json
+POST localhost:3000/api/users/addToWishlist/{{userId}}/68dd1431471489c8f924fd01
 Authorization: {{superSecretBearerToken}}
 
-{
-  "user": "69030aec684fd9f2b72f411c",
-  "productId": "68dd1431471489c8f924fd01"
-}
-
-### Gets the wishlist of a certain user
-# @name getWishlist
-GET localhost:3000/api/users/wishlist/69030aec684fd9f2b72f411c
+### Removes an item from the wishlist
+# @name RemoveFromWishlist
+POST localhost:3000/api/users/removeFromWishlist/{{userId}}/68dd1431471489c8f924fd01
 Authorization: {{superSecretBearerToken}}

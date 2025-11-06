@@ -65,7 +65,7 @@ function App() {
       console.log('Product is already in your wishlist') // This part could be handled better, since im not entirely sure about how this interaction is handled
     }	else {
       dispatch(setWishlist([...user.wishlist, productId]))
-      const result = await userService.addProductToWishlist(productId)
+      const result = await userService.addProductToWishlist(user.id, productId)
       console.log(result)
     }
   }

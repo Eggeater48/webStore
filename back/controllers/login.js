@@ -14,7 +14,7 @@ Lets you login
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
 	// Could probably do something with email as well, but i dont really feel like implementing that at the moment
-	const user = await User.findOne({ username })
+	const user = await User.findOne({ username }).populate('wishlist')
 
 	const passwordCorrect = user === null
 		? false
@@ -40,7 +40,7 @@ loginRouter.post('/', async (request, response) => {
 	response
 		.status(200)
 		.send(
-			{username: user.username, name: user.name, email: user.email, id: user._id, superSecretToken: token})
+			{username: user.username, name: user.name, email: user.email, id: user._id, wishlist: user.wishlist, superSecretToken: token})
 })
 
 module.exports = loginRouter

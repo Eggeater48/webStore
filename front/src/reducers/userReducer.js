@@ -11,7 +11,7 @@ const userSlice = createSlice({
 			state.user = null
 		},
 		setWishlist(state, action) {
-			state.wishlist.append(action.payload) 
+			state.wishlist.push(action.payload)
 		}
 	}
 })

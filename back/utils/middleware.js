@@ -16,6 +16,8 @@ const unknownEndpoint = (request, response) => {
 	response.status(404).send({ error: 'unknown endpoint' })
 }
 
+// TODO implement token and user extractor middleware
+
 const errorHandler = (error, request, response, next) => {
 	if (error.name === 'CastError') {
 		logger.error(error.stack)

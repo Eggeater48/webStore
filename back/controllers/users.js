@@ -40,32 +40,28 @@ userRouter.post('/createNew', async (request, response, next) => {
 /*
 Adds an item to the wishlist array of the user
 @auth none
-@route POST /api/users/addToWishlist/
-@body { userID, productId }
+@route POST /api/users/addToWishlist/:id
+@body { userID }
 @return { updated user object }
 */
 // There probably should be some auth here but...
-userRouter.post('/wishlist/addToWishlist/', async (request, response) => {
-	const user = User.findById(request.user)
+userRouter.post('/addToWishlist/:userId/:id', async (request, response) => {
+	const user = await User.findById(request.params.userId)
+	user.wishlist.push(request.params.id)
 
-	user.wishlist.append(request.params.id)
-
-	console.log(user)
+	await user.save()
+	response.status(201).json(user)
 })
 
-/*
-Just returns an users wishlist
-@auth none
-@route GET /api/users/:id
-@return { wishlist }
-*/
-// TODO remember to add token verification to this part
-userRouter.get('/wishlist/', async (request, response, next) => {
+// Once again implement the tokens, so user doesnt need to be sent in such a weird way
+userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, next) => {
 	try {
-		const users = await User
-			.findById(request.user)
-			.populate('wishlist', { title: 1, price: 1, images: 1 })
-		response.json(users)
+		const user = await User.findById(request.params.userId)
+		await user.wishlist.splice(user.wishlist.indexOf(request.params.id), 1)
+		await user.save()
+
+		response.status(200)
+
 	} catch (error) {
 		next(error)
 	}
