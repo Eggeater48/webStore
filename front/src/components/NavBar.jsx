@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 const NavBar = () => {
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
-	// The user ball element thing could have a dropdown menu when the user is logged in...
 
 	const goToWishlist = () => {
 		if (!user) {
@@ -13,42 +12,30 @@ const NavBar = () => {
 			navigate('/wishlist')
 		}
 	}
-
-	return ( // TODO fix the positioning on this.. its really bad at the moment!!
-		<div className={"relative flex flex-row border-b-black h-15 w-screen "}>
+	// TODO text hover and cursor change
+	return (
+		<div className={"absolute top-0 left-0 w-screen flex flex-row justify-around border-b-black h-15 align-middle text-center"}>
 			<img
 				alt={'Site logo'}
 				src={'/src/assets/mowl.png'}
-				className={"relative w-12 h-12 animate-bounce"}
+				className={"relative w-12 h-12 animate-bounce cursor-pointer"}
 				onClick={() => navigate('/')}
 			/>
 
-			<div className={"w-60 h-10 outline-1 outline-gray-400"}>
-				<img
-					alt={"Search logo"}
-					src={"/src/assets/search_thing.png"}
-					className={"relative w-5 h-5 animate-bounce"}
-				/>
-				<input type={"text"} onChange={() => console.log('ello')} />
-			</div>
-
-			<button onClick={() => navigate('/cart')} className={"top-0"}>
-				Press me to open the shopping cart!!
+			<button className={"h-15 relative hover:text-zinc-500 cursor-pointer"} onClick={() => {navigate('/')}}>
+				Home
 			</button>
 
-			{user ? 
-				<div className={""} onClick={goToWishlist}>
-					Yo
-				</div>
-			 :
-				<button onClick={() => navigate('/login')} className={"top-0"}>
-					<img 
-						alt={"Login"}
-						src={"/src/assets/login_icon.png"}
-						className={""}
-					/>
+			<div className={"flex flex-row gap-2"}>
+				<button onClick={() => navigate('/cart')} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+					Shopping cart
 				</button>
-			}
+
+				<button onClick={goToWishlist} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+					Wishlist
+				</button>
+			</div>
+
 		</div>
 	)
 }

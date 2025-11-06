@@ -1,9 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../reducers/shoppingCartReducer.js";
+import {useNavigate} from "react-router-dom";
 
 const ShoppingCart = () => {
 	const dispatch = useDispatch()
 	const shoppingCartItems = useSelector((state) => state.shoppingCart)
+	const navigate = useNavigate()
 
 	const onRemove = (id) => {
 		dispatch(removeItemFromCart(id))
@@ -51,8 +53,14 @@ const ShoppingCart = () => {
 					</button>
 				</div>
 				:
-				<div className={"animate-spin"}>
-					The cart is empty...
+				<div className={""}>
+					<div className={""}>
+						THE CART IS EMPTY...
+					</div>
+
+					<button onClick={() => {navigate("/")}}>
+						START SHOPPING
+					</button>
 				</div>
 			}
 		</div>

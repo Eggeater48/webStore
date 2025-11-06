@@ -17,7 +17,7 @@ const LoginScreen = () => {
 			setTimeout(() => {
 				setErrorMessage('Login failed. Please try again.')
 			}, 5000)
-			setErrorMessage('null')
+			setErrorMessage(null)
 		} else {
 			dispatch(setUser(result))
 			navigate('/')

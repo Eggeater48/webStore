@@ -1,3 +1,16 @@
 @import "tailwindcss";
+@tailwind utilities;
 
+/* TODO fix the fonts later!! */
 
+@layer base {
+    body {
+        @font-face {
+            font-family: 'Droid Sans Mono';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+        }
+        overflow-x: hidden;
+    }
+}
