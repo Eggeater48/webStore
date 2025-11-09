@@ -13,9 +13,10 @@ import {initialProducts} from "./reducers/productReducer.js";
 import {useEffect} from "react";
 import LoginScreen from "./components/LoginScreen.jsx";
 import SignUpScreen from "./components/SignUpScreen.jsx";
-import Wishlist from "./components/Wishlist.jsx";
+//import Wishlist from "./components/Wishlist.jsx";
 import {setWishlist} from "./reducers/userReducer.js";
 import userService from "./services/userService.js";
+import Reviews from "./components/Reviews.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -76,7 +77,7 @@ function App() {
     : null
 
   return (
-    <div className={'w-screen h-screen'}>
+    <div className={'w-screen h-screen p-10'}>
       <NavBar />
 
       <Routes>
@@ -86,8 +87,7 @@ function App() {
 
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignUpScreen />} />
-
-        <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/:id/review' element={<Reviews productData={product} reviewAverage={re} />} />
       </Routes>
     </div>
   )
