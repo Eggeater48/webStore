@@ -16,7 +16,8 @@ import SignUpScreen from "./components/SignUpScreen.jsx";
 //import Wishlist from "./components/Wishlist.jsx";
 import {setWishlist} from "./reducers/userReducer.js";
 import userService from "./services/userService.js";
-import Reviews from "./components/Reviews.jsx";
+import ReviewWrite from "./components/ReviewWrite.jsx";
+import Wishlist from "./components/Wishlist.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -87,7 +88,8 @@ function App() {
 
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignUpScreen />} />
-        <Route path='/:id/review' element={<Reviews productData={product} reviewAverage={re} />} />
+        <Route path='/:id/review' element={<ReviewWrite reviewAverage={calculateAverage} />} />
+        <Route path='/wishlist' element={<Wishlist productData={productList} />} />
       </Routes>
     </div>
   )

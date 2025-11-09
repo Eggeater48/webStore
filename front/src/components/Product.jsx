@@ -8,15 +8,7 @@ import ReviewWrite from "./ReviewWrite.jsx";
 const Product = ({ productData, reviewAverage, addToCart, addToWishlist }) => {
 	const user = useSelector((state) => state.user)
 	const navigate = useNavigate()
-
-	/*
-	* 		<div className={"relative"}>
-				<img src={productData.images[0]} alt={productData.title} />
-			</div>
-	*
-	* 			<Reviews productData={productData} />
-	*  */
-
+	// TODO add the add to wishlist button
 	return (
 		<div>
 			<div className={"relative h-216 top-12 w-full grid grid-cols-2 overflow-x-hidden outline-black outline-solid outline-1 overflow-hidden"}>
@@ -50,8 +42,13 @@ const Product = ({ productData, reviewAverage, addToCart, addToWishlist }) => {
 						</select>
 
 						<button className={"bg-blue-500 w-64 h-14 rounded-3xl text-white text-2xl hover:bg-blue-400"}
-							onClick={() => {navigate("/cart")}}>Add to cart</button>
+							onClick={() => {navigate("/cart")}}>Add to cart
+						</button>
 					</div>
+
+					<button className={""} onClick={() => {navigate("/wishlist", { state: productData })}}>
+						Add to wishlist
+					</button>
 
 					<div>
 						<div>More details dropdown</div>

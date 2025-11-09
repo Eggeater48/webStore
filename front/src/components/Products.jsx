@@ -37,8 +37,14 @@ const Products = ({ reviewAverage, addToCart, totalReviews, addToWishlist }) => 
 								{product.title}
 							</div>
 
-							<div className={""}>
-								€{product.price}
+							<div className={"flex flex-row"}>
+								<div className={""}>
+									€{product.price}
+								</div>
+
+								<div className={"relative"}>
+									{reviewAverage(product)}/5
+								</div>
 							</div>
 						</div>
 					</div>
