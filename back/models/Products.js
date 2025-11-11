@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Ugly block that contains the dna of a product
 // I do wonder if there is a way to make this look prettier
 const productSchema = new mongoose.Schema({
 	title: String,

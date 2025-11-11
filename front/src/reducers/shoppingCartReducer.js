@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit"
 
+// Pretty much the same idea as userReducer.js
 const shoppingCartSlice = createSlice({ // Products could be put into window.localstorage.. If we're feeling fancy
 	name: "shoppingCart",
 	initialState: [],

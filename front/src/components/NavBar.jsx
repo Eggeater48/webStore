@@ -1,17 +1,18 @@
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
 
-	const goToWishlist = () => {
+	const onWishList = () => {
 		if (!user) {
-			navigate('/login')
+			navigate("/login", { state: { pathname: "/wishlist" } })
 		} else {
-			navigate('/wishlist')
+			navigate("/wishlist")
 		}
 	}
+	// TODO cool line below the navbar to make it easier to see ig????
 	// TODO text hover and cursor change
 	return (
 		<div className={"absolute top-0 left-0 w-screen flex flex-row justify-around border-b-black h-15 align-middle text-center"}>
@@ -31,7 +32,7 @@ const NavBar = () => {
 					Shopping cart
 				</button>
 
-				<button onClick={goToWishlist} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+				<button onClick={onWishList} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
 					Wishlist
 				</button>
 			</div>

@@ -2,6 +2,7 @@
 
 const logger = require('./logger')
 
+// Mostly just for debugging purposes altho it just floods the console / cmd most of the time
 const requestLogger = (request, response, next) => {
 	logger.info('--------')
 	logger.info('Method |', request.method)
@@ -12,12 +13,15 @@ const requestLogger = (request, response, next) => {
 	next()
 }
 
+// doesnt even work even tho its implemented correctly
 const unknownEndpoint = (request, response) => {
 	response.status(404).send({ error: 'unknown endpoint' })
 }
 
 // TODO implement token and user extractor middleware
 
+// Beautiful block that has saved so much precious time
+// Any next(error)'s get passed to this
 const errorHandler = (error, request, response, next) => {
 	if (error.name === 'CastError') {
 		logger.error(error.stack)

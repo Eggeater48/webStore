@@ -1,18 +1,24 @@
 import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../reducers/shoppingCartReducer.js";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const ShoppingCart = () => {
 	const dispatch = useDispatch()
 	const shoppingCartItems = useSelector((state) => state.shoppingCart)
+	const user = useSelector(state => state.user)
 	const navigate = useNavigate()
+	const location = useLocation()
 
 	const onRemove = (id) => {
 		dispatch(removeItemFromCart(id))
 	}
 
 	const onCheckout = () => {
-		alert('Checkout has not been implemented yet 😨😨😨')
+		if (!user) {
+			navigate("/login", { state: location })
+		} else {
+			navigate("/checkout", { state: shoppingCartItems })
+		}
 	}
 
 	const sumOfItemInCart = shoppingCartItems.reduce(
@@ -24,45 +30,62 @@ const ShoppingCart = () => {
 		(totalCount, item) => totalCount + item.count,
 		0
 	)
-
+	// TODO The positioning is completely fucked up.. fix that asap!!
 	return (
 		<div>
 			{shoppingCartItems.length ?
-				<div>
-					{shoppingCartItems.map(item =>
-						<div key={item.id} className={""}>
-							<div>{item.title}</div>
-
-							<div>{item.price}</div>
-							{item.count > 1 &&
+					<div className={"flex flex-row flex-wrap"}>
+						{shoppingCartItems.map(item =>
+							<div key={item.id} >
 								<div>
-									{item.count}
-								</div>}
+									{item.title}
+								</div>
 
-							<button onClick={() => {onRemove(item.id)}}>
-								Press me to remove this item from the cart!!
+								<div>
+									€{item.price}
+								</div>
+
+								{item.count > 1 &&
+									<div>
+										{item.count}
+									</div>}
+
+								<button onClick={() => {onRemove(item.id)}}>
+									Press me to remove this item from the cart!!
+								</button>
+							</div>
+						)}
+						<div className={"border-neutral-300 border-1 rounded-md"}>
+							<div className={"flex flex-row gap-3"}>
+								<div className={""}>
+									{totalItemsInCart} products
+								</div>
+
+								<div className={""}>
+									{sumOfItemInCart} total
+								</div>
+							</div>
+
+							<button
+								className={"bg-orange-500 rounded-md text-white w-72 h-12 text-2xl font-bold cursor-pointer"}
+								onClick={onCheckout}>
+								Check out
 							</button>
 						</div>
-					)}
-					<div>
-						{totalItemsInCart} products, {sumOfItemInCart} total
 					</div>
 
-					<button onClick={onCheckout}>
-						Checkout
-					</button>
-				</div>
 				:
-				<div className={""}>
+				<div className={"flex flex-col flex-wrap"}>
 					<div className={""}>
 						THE CART IS EMPTY...
 					</div>
 
-					<button onClick={() => {navigate("/")}}>
+					<button className={""} onClick={() => {navigate("/")}}>
 						START SHOPPING
 					</button>
 				</div>
 			}
+
 		</div>
 	)
 }

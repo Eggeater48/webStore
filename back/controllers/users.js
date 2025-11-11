@@ -25,13 +25,31 @@ userRouter.post('/createNew', async (request, response, next) => {
 				name,
 				email,
 				passwordHash,
-				wishlist: []
+				wishlist: [],
+				addressSettings: {}
 			})
 			// Has to be saved here cuz otherwise it just skips saving if you put it at the end of line 20!!
 			const saveUser = await user.save()
 
 			response.status(201).json(saveUser)
 		}
+	} catch (error) {
+		next(error)
+	}
+})
+
+/*
+USed for adding the users address deets during the buying phase
+@auth none (there for real should be alot of auth but its kind hard to implement and i dont wanna)
+@route PUT /api/users/change/:id
+@body { object with all the deets }
+@return { updated cooler user object }
+ */
+userRouter.put('/change/:id', async (request, response, next) => {
+	try {
+		const user = await User.findByIdAndUpdate(request.params.id, { addressSettings: request.body })
+		console.log(user)
+		response.status(201).json(user)
 	} catch (error) {
 		next(error)
 	}
@@ -50,7 +68,12 @@ userRouter.post('/addToWishlist/:userId/:id', async (request, response) => {
 	user.wishlist.push(request.params.id)
 
 	await user.save()
-	response.status(201).json(user)
+	// I hate to do this this way but only option i could come up with tbh
+	const populatedUser = await User.findById(request.params.userId).populate('wishlist')
+
+	console.log(populatedUser)
+
+	response.status(201).json(populatedUser)
 })
 
 // Once again implement the tokens, so user doesnt need to be sent in such a weird way

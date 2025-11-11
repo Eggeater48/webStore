@@ -11,11 +11,11 @@ Lets you login
 @body { username, password }
 @return { username, name, id, superSecretToken }
 */
+
 loginRouter.post('/', async (request, response) => {
 	const { username, password } = request.body
-	// Could probably do something with email as well, but i dont really feel like implementing that at the moment
 	const user = await User.findOne({ username }).populate('wishlist')
-
+	// populate is basically just left join from sql
 	const passwordCorrect = user === null
 		? false
 		: await bcrypt.compare(password, user.passwordHash)
@@ -31,16 +31,24 @@ loginRouter.post('/', async (request, response) => {
 		id: user._id
 	}
 
-	const token = jwt.sign(
+	const token = jwt.sign( // This part is unused at the moment but would be instrumental in securing the site
 		userForToken,
 		process.env.SECRET,
 		{ expiresIn: 60*60 }
-	) // 1 hour
+	) // Token lasts for 1 hour
 
 	response
 		.status(200)
 		.send(
-			{username: user.username, name: user.name, email: user.email, id: user._id, wishlist: user.wishlist, superSecretToken: token})
+			{
+				username: user.username,
+				name: user.name,
+				email: user.email,
+				id: user._id,
+				wishlist: user.wishlist,
+				superSecretToken: token,
+				addressSettings: user.addressSettings
+			})
 })
 
 module.exports = loginRouter

@@ -1,7 +1,6 @@
 const productRouter = require('express').Router()
 const Product = require('../models/Products')
 
-
 // Middleware import goes here (mainly needed for token verification)
 
 /*

@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import { Form, Field } from 'react-final-form'
 //import {addNewReview} from "../reducers/productReducer.js";
-
+// open this component and path if your feeling really brave and arent scared of bad / not even half baked ui desingn
+//TODO finish this.. Its probably the worst part of this mess of an app
 const Reviews = ({ productData, reviewAverage }) => {
 	const [showForm, setShowForm] = useState(false)
 	const dispatch = useDispatch() // Write a thunk for the productReducer that updates the data both on the mongo side and client side
@@ -14,14 +14,18 @@ const Reviews = ({ productData, reviewAverage }) => {
 	}
 
 	return (
-		<div className={"mt-15 flex flex-col"}>
+		<div className={"flex flex-col"}>
 
 		<div>
-			<div className={""}>Reviews</div>
+			<div className={"text-4xl"}>
+				Reviews
+			</div>
 
-			<div className={""}>{reviewAverage(productData)}/5</div>
+			<div className={""}>
+				{reviewAverage(productData)}/5
+			</div>
 
-			<div className={""} onClick={onNewReview}>
+			<div className={"cursor-pointer"} onClick={onNewReview}>
 				Write a review
 			</div>
 

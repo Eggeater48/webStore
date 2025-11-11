@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Just the basic mold for user, like in sql ig
 const userSchema = new mongoose.Schema({
 	username: {
 		type: String,
@@ -21,6 +22,16 @@ const userSchema = new mongoose.Schema({
 		}
 	],
 	passwordHash: String,
+	addressSettings: {
+		country: String,
+		firstName: String,
+		lastName: String,
+		address: String,
+		stateProvince: String,
+		city: String,
+		zipCode: String,
+		phoneNumber: String
+	}
 })
 
 userSchema.set('toJSON', {
