@@ -87,7 +87,6 @@ function App() {
   const removeFromWishlist = async (productId) => {
     dispatch(removeProductFromWishlist(productId))
     const result = await userService.removeProductFromWishlist(user.id, productId)
-    console.log(result)
   }
 
   // thought it would be cool to implement a "you may also like" function, altho the way i did implement it was kinda stupid
@@ -98,6 +97,7 @@ function App() {
       randomProducts.push(productList[Math.floor(Math.random()*productList.length)])
     }
 
+    console.log(randomProducts)
     return randomProducts
   }
 
@@ -143,13 +143,10 @@ function App() {
             reviewAverage={calculateAverage}
             removeFromWishlist={removeFromWishlist} />} />
 
-          <Route path='/checkout' element={<CheckOutScreen
-
-          /> } />
+          <Route path='/checkout' element={<CheckOutScreen/> } />
 
         </Routes>
       </div>
-      <Footer />
     </div>
   )
 }

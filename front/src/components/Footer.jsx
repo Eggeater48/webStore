@@ -3,7 +3,7 @@ const Footer = () => {
   // TODO check my grammar cuz its kinda ass
   // TODO mby switch out the divs for actual buttons and not just leave them as cardboard cutouts
   return (
-    <div className={"w-full h-0.5 bg-gray-200"}>
+    <div className={"w-full h-0.5 bg-gray-200 mt-10"}>
       <div className={"w-full h-12 flex flex-row gap-3 items-center justify-center"}>
         <div className={""}>EUR €</div>
         <div className={""}>CONTACT</div>

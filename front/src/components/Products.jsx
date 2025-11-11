@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {initialProducts} from "../reducers/productReducer.js";
 import {useDispatch, useSelector} from "react-redux";
 import SingularProductFrame from "./SingularProductFrame.jsx";
+import Footer from "./Footer.jsx";
 
 const Products = ({ productData, reviewAverage, totalReviews, addToWishlist, addToCart }) => {
 	const navigate = useNavigate()
@@ -22,6 +23,7 @@ const Products = ({ productData, reviewAverage, totalReviews, addToWishlist, add
 					<SingularProductFrame reviewAverage={reviewAverage} product={product} addToCart={addToCart}/>
 				)}
 			</div>
+			<Footer />
 		</div>
 	)
 }

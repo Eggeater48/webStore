@@ -27,7 +27,7 @@ const SignUpScreen = () => {
 		<Form
 			onSubmit={handleSignUp}
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
-				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle'}>
+				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle mt-12'}>
 					{errorMessage &&
 					<div className={''}>{errorMessage}</div>
 					}
@@ -38,6 +38,7 @@ const SignUpScreen = () => {
 							component={'input'}
 							type={'text'}
 							placeholder={'Username'}
+							className={"evil-border-outline-shadow"}
 						/>
 					</div>
 
@@ -47,6 +48,7 @@ const SignUpScreen = () => {
 							component={'input'}
 							type={'text'}
 							placeholder={'Name'}
+							className={"mt-5 evil-border-outline-shadow"}
 						/>
 					</div>
 
@@ -56,6 +58,7 @@ const SignUpScreen = () => {
 							component={'input'}
 							type={'text'}
 							placeholder={'Email'}
+							className={"mt-5 evil-border-outline-shadow"}
 						/>
 					</div>
 
@@ -65,6 +68,7 @@ const SignUpScreen = () => {
 							component={'input'}
 							type={'password'}
 							placeholder={'Password'}
+							className={"mt-5 evil-border-outline-shadow"}
 						/>
 					</div>
 

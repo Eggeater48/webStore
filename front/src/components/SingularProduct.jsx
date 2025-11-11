@@ -5,6 +5,7 @@ import ReviewWrite from "./ReviewWrite.jsx";
 import SingularProductFrame from "./SingularProductFrame.jsx";
 import {useEffect} from "react";
 import {initialProducts} from "../reducers/productReducer.js";
+import YouMayAlsoLike from "./YouMayAlsoLike.jsx";
 
 //import { Await, useLoaderData } from "react-router-dom";
 // Just change to using those if the small nitpick doesn't get fixed
@@ -112,20 +113,7 @@ const SingularProduct = ({ reviewAverage, addToCart, addToWishlist, alsoLike, re
 
 			<Reviews productData={productData} reviewAverage={reviewAverage}></Reviews>
 
-			<div className={"flex flex-col mt-6"}>
-				<div className={"text-4xl absolute self-center"}>
-					You may also like
-				</div>
-
-				<div className={"flex flex-row gap-20 pb-28"}>
-					{alsoLike().map(product =>
-						<SingularProductFrame
-							reviewAverage={reviewAverage}
-							product={product}
-							addToCart={addToCart} />
-					)}
-				</div>
-			</div>
+			<YouMayAlsoLike products={alsoLike()} addToCart={addToCart} reviewAverage={reviewAverage} />
 
 		</div>
 	)

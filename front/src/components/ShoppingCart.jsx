@@ -9,6 +9,7 @@ const ShoppingCart = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 
+	// Could add something like user has a shoppingCart field which has id's which could then be populated to save a little bit of headache
 	const onRemove = (id) => {
 		dispatch(removeItemFromCart(id))
 	}
@@ -24,37 +25,43 @@ const ShoppingCart = () => {
 	const sumOfItemInCart = shoppingCartItems.reduce(
 		(total, item) => total + item.price * item.count,
 		0,
-	)
+	).toFixed(2) // TODO round this numbers second decimal properly and maybe find a smarter way to handle this
 
 	const totalItemsInCart = shoppingCartItems.reduce(
 		(totalCount, item) => totalCount + item.count,
 		0
 	)
-	// TODO The positioning is completely fucked up.. fix that asap!!
+
 	return (
-		<div>
+		<div className={""}>
 			{shoppingCartItems.length ?
-					<div className={"flex flex-row flex-wrap"}>
+					<div className={"flex flex-col flex-wrap gap-6"}>
 						{shoppingCartItems.map(item =>
-							<div key={item.id} >
-								<div>
+							<div className={"outline-neutral-500 outline-solid outline-1 w-80 h-32 grid grid-cols-3"} key={item.id} >
+								<div className={""}>
 									{item.title}
 								</div>
 
-								<div>
+								<div className={""}>
 									€{item.price}
 								</div>
 
 								{item.count > 1 &&
-									<div>
+									<div className={""}>
 										{item.count}
 									</div>}
 
-								<button onClick={() => {onRemove(item.id)}}>
-									Press me to remove this item from the cart!!
+								<button
+									className={""}
+									onClick={() => {onRemove(item.id)}}>
+									<img
+										className={""}
+										src={"/src/assets/delete.svg"}
+										alt={"remove from cart"} />
 								</button>
 							</div>
 						)}
+
 						<div className={"border-neutral-300 border-1 rounded-md"}>
 							<div className={"flex flex-row gap-3"}>
 								<div className={""}>
@@ -73,7 +80,6 @@ const ShoppingCart = () => {
 							</button>
 						</div>
 					</div>
-
 				:
 				<div className={"flex flex-col flex-wrap"}>
 					<div className={""}>
@@ -85,7 +91,6 @@ const ShoppingCart = () => {
 					</button>
 				</div>
 			}
-
 		</div>
 	)
 }

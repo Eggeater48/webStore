@@ -35,7 +35,7 @@ const LoginScreen = () => {
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
 				<form
 					onSubmit={handleSubmit}
-					className={'flex justify-center items-center flex-col align-middle mt-24'}>
+					className={'flex justify-center items-center flex-col align-middle mt-12'}>
 					{errorMessage &&
 					<div className={'text-red-500'}>{errorMessage}</div>
 					}
