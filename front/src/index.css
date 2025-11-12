@@ -18,7 +18,9 @@
 @layer components {
     .evil-border-outline-shadow {
         @apply border border-neutral-200 shadow hover:border-neutral-300 hover:shadow-neutral-400;
-    }
+    },
+    .r
+
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
