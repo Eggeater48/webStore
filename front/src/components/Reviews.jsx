@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 //import {addNewReview} from "../reducers/productReducer.js";
 // open this component and path if your feeling really brave and arent scared of bad / not even half baked ui desingn
@@ -8,9 +8,12 @@ const Reviews = ({ productData, reviewAverage }) => {
 	const [showForm, setShowForm] = useState(false)
 	const dispatch = useDispatch() // Write a thunk for the productReducer that updates the data both on the mongo side and client side
 	const navigate = useNavigate()
+	const user = useSelector(state => state.user)
 
 	const onNewReview = () => {
-		navigate(`/${productData.id}/review`, { state: productData })
+		if (!user) {
+			navigate('/login', { state: {}})
+		}
 	}
 
 	return (

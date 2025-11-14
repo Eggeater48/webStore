@@ -16,6 +16,14 @@ const shoppingCartSlice = createSlice({ // Products could be put into window.loc
 				return product.id !== action.payload.id ? product : action.payload
 			})
 		},
+		updateCart(state, action) {
+			return state.map(product =>
+				product.id === action.payload.id ? action.payload : product
+			)
+		},
+		clearCart(state) {
+			return []
+		}
 	}
 })
 
@@ -30,5 +38,5 @@ export const incrementItemCount = (product) => {
 	}
 }
 
-export const { addItemToCart, removeItemFromCart, increaseItemsCount } = shoppingCartSlice.actions
+export const { addItemToCart, removeItemFromCart, increaseItemsCount, updateCart, clearCart } = shoppingCartSlice.actions
 export default shoppingCartSlice.reducer

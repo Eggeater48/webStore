@@ -8,7 +8,9 @@ POST localhost:3000/api/products/addNew
 Content-Type: application/json
 Authorization: {{superSecretBearerToken}}
 
+{
 
+}
 
 ### Adds a new user, like the name says once again
 # @name AddNewUser
@@ -41,3 +43,22 @@ Authorization: {{superSecretBearerToken}}
 # @name RemoveFromWishlist
 POST localhost:3000/api/users/removeFromWishlist/{{userId}}/68dd1431471489c8f924fd01
 Authorization: {{superSecretBearerToken}}
+
+### Checkout testing
+#  @name checkout
+POST localhost:3000/api/users/checkout/{{userId}}
+Content-Type: application/json
+Authorization: {{superSecretBearerToken}}
+
+{
+  "products": [
+    {
+      "id": "690e051dee2e7357665a61cc",
+      "quantity": 2
+    },
+    {
+      "id": "690e051dee2e7357665a61ce",
+      "quantity": 1
+    }
+  ]
+}

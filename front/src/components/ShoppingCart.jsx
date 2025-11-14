@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {removeItemFromCart} from "../reducers/shoppingCartReducer.js";
+import {removeItemFromCart, updateCart} from "../reducers/shoppingCartReducer.js";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const ShoppingCart = () => {
@@ -8,11 +8,6 @@ const ShoppingCart = () => {
 	const user = useSelector(state => state.user)
 	const navigate = useNavigate()
 	const location = useLocation()
-
-	// Could add something like user has a shoppingCart field which has id's which could then be populated to save a little bit of headache
-	const onRemove = (id) => {
-		dispatch(removeItemFromCart(id))
-	}
 
 	const onCheckout = () => {
 		if (!user) {
@@ -32,33 +27,70 @@ const ShoppingCart = () => {
 		0
 	)
 
+	const changeProductInCart = async (newProduct) => {
+		const result = dispatch(updateCart(newProduct))
+		console.log(result)
+	}
+
+	const removeFromCart = async (id) => {
+		const result = dispatch(removeItemFromCart(id))
+		console.log(result)
+	}
+
 	return (
 		<div className={""}>
 			{shoppingCartItems.length ?
 					<div className={"flex flex-col flex-wrap gap-6"}>
-						{shoppingCartItems.map(item =>
-							<div className={"outline-neutral-500 outline-solid outline-1 w-80 h-32 grid grid-cols-3"} key={item.id} >
-								<div className={""}>
-									{item.title}
-								</div>
+						{shoppingCartItems.map(product =>
+							<div className={"w-3/4 outline-gray-300 h-48 outline-1 outline-solid grid grid-cols-3"}>
+								<img
+									className={"h-1/2 w-3/4 outline-1 outline-gray-300 outline-solid rounded-md self-center justify-self-center"}
+									src={product.thumbnail}
+									alt={product.title}/>
 
-								<div className={""}>
-									€{item.price}
-								</div>
-
-								{item.count > 1 &&
+								<div className={"flex flex-col gap-3 justify-self-center"}>
 									<div className={""}>
-										{item.count}
-									</div>}
+										{product.title}
+									</div>
+								</div>
 
-								<button
-									className={""}
-									onClick={() => {onRemove(item.id)}}>
-									<img
-										className={""}
-										src={"/src/assets/delete.svg"}
-										alt={"remove from cart"} />
-								</button>
+								<div className={"flex flex-row gap-4 self-center justify-self-center"}>
+									<div className={""}>
+										€{product.price}
+									</div>
+
+									<div className={"grid grid-cols-3 h-12 w-24 outline-1 outline-solid outline-gray-400 rounded-md"}>
+										{product.count === 1 ?
+											<button
+												onClick={() => removeFromCart(product.id)}
+												className={""}>
+												<img
+													className={"rounded-full w-4 h-4"}
+													src={"/src/assets/delete.svg"}
+													alt={"Remove from wishlist"}/>
+											</button>
+											:
+											<button
+												className={"text-center rounded-full w-4 h-4 "}
+												onClick={() => changeProductInCart({...product, count: product.count - 1})}>
+												-
+											</button>
+										}
+
+										<div className={"text-center"}>
+											{product.count}
+										</div>
+
+										<button
+											className={"text-center "}
+											onClick={() => changeProductInCart({...product, count: product.count + 1})}>
+											+
+										</button>
+
+									</div>
+
+								</div>
+
 							</div>
 						)}
 

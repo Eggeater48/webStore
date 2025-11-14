@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 const NavBar = () => {
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
+	const shoppingCart = useSelector((state) => state.shoppingCart)
+	// This could also be just passed as state
 
 	const onWishList = () => {
 		if (!user) {
@@ -12,8 +14,8 @@ const NavBar = () => {
 			navigate("/wishlist")
 		}
 	}
-	// TODO cool line below the navbar to make it easier to see ig????
-	// TODO text hover and cursor change
+
+	// The shopping cart length thing is kinda weird.. Could and should try improving it later
 	return (
 		<div className={"absolute top-0 left-0 w-screen flex flex-row justify-around border-b-black h-15 align-middle text-center"}>
 			<img
@@ -29,7 +31,7 @@ const NavBar = () => {
 
 			<div className={"flex flex-row gap-2"}>
 				<button onClick={() => navigate('/cart')} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
-					Shopping cart
+					Shopping cart {shoppingCart.length > 0 && `(${shoppingCart.length})`}
 				</button>
 
 				<button onClick={onWishList} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>

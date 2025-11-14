@@ -21,6 +21,24 @@ const userSchema = new mongoose.Schema({
 			ref: 'Product'
 		}
 	],
+
+	purchaseHistory: {
+		totalPurchases: Number, // Total times the user has made a purchase (not total items bought)
+		totalSpent: Number,
+		purchases: [
+			{
+				totalPrice: Number,
+				purchaseDate: Date,
+				products: [
+					{
+						type: mongoose.Schema.Types.ObjectId,
+						ref: 'Product'
+					}
+				]
+			}
+		]
+	}
+	,
 	passwordHash: String,
 	addressSettings: {
 		country: String,

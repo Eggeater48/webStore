@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 
 const userRouter = require('express').Router()
 const User = require('../models/User')
+const Product = require('../models/Products')
 
 /*
 Creates a new user
@@ -86,6 +87,23 @@ userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, nex
 		response.status(200)
 
 	} catch (error) {
+		next(error)
+	}
+})
+
+userRouter.post('/checkout/:id', async (request, response, next) => {
+	try {
+		const user = await User.findById(request.params.id)
+		const productIds = request.body.products.map(product => product.id)
+		const products = await Product.find({ '_id': { $in: productIds } })
+
+		console.log(request.params.id, request.body.products)
+		console.log(productIds)
+		user.purchaseHistory.totalPurchases += 1
+
+		user.purchaseHistory.totalspent =
+
+	} catch  (error) {
 		next(error)
 	}
 })

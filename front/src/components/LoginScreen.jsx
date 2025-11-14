@@ -22,6 +22,7 @@ const LoginScreen = () => {
 			dispatch(setUser(result))
 
 			if (location.state) {
+				console.log(result)
 				navigate(location.state.pathname)
 			} else {
 				navigate('/')

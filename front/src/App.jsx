@@ -101,7 +101,7 @@ function App() {
     return randomProducts
   }
 
-  // Looks at the id from the url at the tippity top and searches for a matching id from a product from my database
+  // Looks at the id from the url at the tippity top (search bar?) and searches for a matching id from a product from my database
   const match = useMatch('/:id')
   const product = match
     ? productList.find(product => product.id === match.params.id)
@@ -139,7 +139,6 @@ function App() {
             reviewAverage={calculateAverage} />} />
 
           <Route path='/wishlist' element={<Wishlist
-            productData={productList}
             reviewAverage={calculateAverage}
             removeFromWishlist={removeFromWishlist} />} />
 

@@ -5,11 +5,10 @@ const reviewWrite = () => {
   const navigate = useNavigate()
   const state = useLocation()
 
+
   const onSubmit = async values => {
-    console.log(values) // TODO should also send the currently logged in users name and email aswell!!
-    // For future reference values are rating and comment right now!!
-    //dispatch(addNewReview())
-    //navigate(state.pathname)
+    console.log(values)
+
   }
 
   //TODO TODO change the rating input cuz its ugly, smelly and kinda weird to use!!!

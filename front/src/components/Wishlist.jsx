@@ -1,42 +1,47 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-// TODO this needs a lot more work. its really scuffed at the momeent
-const Wishlist = ({ reviewAverage }) => {
+const Wishlist = ({ reviewAverage, removeFromWishlist }) => {
   const state = useLocation()
   const navigate = useNavigate()
   const location = useLocation()
 
   const user = useSelector(state => state.user)
 
-  const [counter, setCounter] = useState(0)
-
-  // TODO center the text in the counter buttons
   return (
     <div className={""}>
       {user.wishlist.length !== 0 ?
-        <div>
+        <div className={"flex-col flex gap-4"}>
           {user.wishlist.map((product) =>
-            <div className={"w-2/4 outline-gray-300 h-48 outline-1 outline-solid"}>
-              <div className={"grid grid-cols-3 h-5 w-16 outline-1 outline-solid outline-gray-400 rounded-md"}>
-                <button
-                  className={"text-center "}
-                  onClick={() => setCounter(counter + 1)}>
-                  +
-                </button>
+            <div className={"w-100 outline-gray-300 h-48 outline-1 outline-solid grid grid-cols-3"}>
+              <img
+                className={"h-1/2 w-3/4 outline-1 outline-gray-300 outline-solid rounded-md self-center justify-self-center"}
+                src={product.thumbnail}
+                alt={product.title}/>
 
-                <div className={"text-center"}>
-                  {counter}
+              <div className={"flex flex-col gap-3 justify-self-center"}>
+                <div className={""}>
+                  {product.title}
                 </div>
 
-                <button
-                  className={"text-center"}
-                  onClick={() => setCounter(counter - 1)}>
-                  -
-                </button>
+                <div className={""}>
+                  {reviewAverage(product)}/5
+                </div>
               </div>
 
+              <div className={"flex flex-row gap-4 self-center justify-self-center"}>
+                <div className={""}>
+                  €{product.price}
+                </div>
+                <button
+                  onClick={() => removeFromWishlist(product.id)}
+                  className={""}>
+                  <img
+                    className={"rounded-full w-4 h-4"}
+                    src={"/src/assets/delete.svg"}
+                    alt={"Remove from wishlist"}/>
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -45,9 +50,7 @@ const Wishlist = ({ reviewAverage }) => {
           Your wishlist is empty.
         </div>
       }
-
     </div>
-
   )
 }
 
