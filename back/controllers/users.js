@@ -97,13 +97,33 @@ userRouter.post('/checkout/:id', async (request, response, next) => {
 		const productIds = request.body.products.map(product => product.id)
 		const products = await Product.find({ '_id': { $in: productIds } })
 
-		console.log(request.params.id, request.body.products)
-		console.log(productIds)
-		user.purchaseHistory.totalPurchases += 1
+		const combined = request.body.products.map(product => {
+			const lilP = products
+				.find(p => p.id === product.id)
 
-		user.purchaseHistory.totalspent =
+			return {
+				id: product.id,
+				purchaseSum: lilP.price * product.quantity,
+			}
+		})
 
-	} catch  (error) {
+		combined.forEach((product) => {
+			user.purchaseHistory.push({
+				"totalPrice": product.purchaseSum,
+				"purchaseDate": new Date().toISOString(),
+				"products": [
+					...productIds
+				]
+			})
+			user.totalSpent = user.totalSpent + product.purchaseSum
+		})
+		user.totalPurchases = user.totalPurchases + 1
+
+		await user.save()
+
+		response.status(200)
+
+	} catch (error) {
 		next(error)
 	}
 })
