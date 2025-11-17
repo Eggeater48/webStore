@@ -45,8 +45,8 @@ POST localhost:3000/api/users/removeFromWishlist/{{userId}}/68dd1431471489c8f924
 Authorization: {{superSecretBearerToken}}
 
 ### Checkout testing
-#  @name checkout
-POST localhost:3000/api/users/checkout/{{userId}}
+# @name checkout
+POST localhost:3000/api/purchases/checkout/{{userId}}
 Content-Type: application/json
 Authorization: {{superSecretBearerToken}}
 

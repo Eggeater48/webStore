@@ -29,18 +29,7 @@ const userSchema = new mongoose.Schema({
 		type: Number,
 		default: 0
 	},
-	purchaseHistory: [
-		{
-			totalPrice: Number,
-			purchaseDate: Date,
-			products: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Product'
-				}
-			]
-		}
-	],
+
 	passwordHash: String,
 	addressSettings: {
 		country: String,
@@ -50,7 +39,8 @@ const userSchema = new mongoose.Schema({
 		stateProvince: String,
 		city: String,
 		zipCode: String,
-		phoneNumber: String
+		phoneNumber: String,
+		birthday: Date
 	}
 })
 

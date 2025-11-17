@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs')
 
 const userRouter = require('express').Router()
 const User = require('../models/User')
-const Product = require('../models/Products')
 
 /*
 Creates a new user
@@ -82,43 +81,6 @@ userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, nex
 	try {
 		const user = await User.findById(request.params.userId)
 		await user.wishlist.splice(user.wishlist.indexOf(request.params.id), 1)
-		await user.save()
-
-		response.status(200)
-
-	} catch (error) {
-		next(error)
-	}
-})
-
-userRouter.post('/checkout/:id', async (request, response, next) => {
-	try {
-		const user = await User.findById(request.params.id)
-		const productIds = request.body.products.map(product => product.id)
-		const products = await Product.find({ '_id': { $in: productIds } })
-
-		const combined = request.body.products.map(product => {
-			const lilP = products
-				.find(p => p.id === product.id)
-
-			return {
-				id: product.id,
-				purchaseSum: lilP.price * product.quantity,
-			}
-		})
-
-		combined.forEach((product) => {
-			user.purchaseHistory.push({
-				"totalPrice": product.purchaseSum,
-				"purchaseDate": new Date().toISOString(),
-				"products": [
-					...productIds
-				]
-			})
-			user.totalSpent = user.totalSpent + product.purchaseSum
-		})
-		user.totalPurchases = user.totalPurchases + 1
-
 		await user.save()
 
 		response.status(200)
