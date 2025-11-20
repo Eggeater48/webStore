@@ -1,12 +1,10 @@
-const bcrypt = require('bcryptjs');
+//const bcrypt = require('bcryptjs');
 const purchaseRouter = require('express').Router()
-const Purchase = require('../models/Purchases')
 const User = require('../models/User')
 const Product = require('../models/Products')
 
 purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 	try {
-		const user = await User.findById(request.params.id)
 		const productIds = request.body.products.map(product => product.id)
 		const products = await Product.find({ '_id': { $in: productIds } })
 
@@ -15,25 +13,26 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 				.find(p => p.id === product.id)
 
 			return {
-				id: product.id,
+				product: [ product.id ],
 				totalPrice: lilP.price * product.quantity,
 				quantity: product.quantity
 			}
 		})
 
-		const theCreature = {
-			userId: user.id,
-			purchaseHistory: [
-				{
-					totalPrice: 3,
-					purchaseDate: new Date(),
-					products: request.body
-				}
-			]
+		const totalSum = combined.reduce((n, {totalPrice}) => n + totalPrice, 0)
+
+		const purchase = {
+			purchaseSum: totalSum,
+			purchaseDate: new Date(),
+			products: combined
 		}
 
-		console.log(theCreature)
-		console.log(theCreature.purchaseHistory.products)
+		const user = await User.findById(request.params.id)
+
+		user.purchaseHistory.push(purchase)
+
+		console.log(purchase)
+		console.log(user.purchaseHistory)
 
 		//await user.save()*/
 
