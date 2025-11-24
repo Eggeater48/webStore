@@ -29,19 +29,6 @@ const userSchema = new mongoose.Schema({
 		type: Number,
 		default: 0
 	},
-	purchaseHistory: [
-		{
-			totalPrice: Number,
-			products: [
-				{
-					product: [
-						{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }
-					],
-					quantity: Number
-				}
-			]
-		}
-	],
 	passwordHash: String,
 	addressSettings: {
 		country: String,

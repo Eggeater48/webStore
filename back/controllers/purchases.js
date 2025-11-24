@@ -2,6 +2,7 @@
 const purchaseRouter = require('express').Router()
 const User = require('../models/User')
 const Product = require('../models/Products')
+const Order = require('../models/Orders')
 
 purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 	try {
@@ -23,26 +24,48 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 
 		const purchase = {
 			purchaseSum: totalSum,
-			purchaseDate: new Date(),
 			products: combined
 		}
 
-		const user = await User.findById(request.params.id)
-
-		user.purchaseHistory.push(purchase)
-
 		console.log(purchase)
-		console.log(user.purchaseHistory)
 
-		//await user.save()*/
+		/*const order = new Order({
+			user: user.id,
+			products: [
 
-		response.status(200)
+			]
+		})
+*/
+		/*user.purchaseHistory.push(purchase)
 
+		user.totalSpent += user.purchaseHistory.reduce((n, {purchaseSum}) => n + purchaseSum, 0)
+		user.totalPurchases += 1*/
+
+		//await user.save()
+
+		response.status(200).end()
 	} catch (error) {
 		next(error)
 	}
 })
 
+// TODO rename this path to something else at some point
+purchaseRouter.get('/spent', async (request, response, next) => {
+	try {
+		const users = await User.find({})
+		const result = users.map((user) => {
+			return {
+				username: user.name,
+				spent: user.totalSpent,
+				purchaseCount: user.totalPurchases,
+				purchasedItems: user.purchaseHistory
+			}
+		})
 
+		response.status(200).json(result).end()
+	} catch (error) {
+		next(error)
+	}
+})
 
 module.exports = purchaseRouter

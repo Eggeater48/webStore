@@ -19,6 +19,7 @@ import ReviewWrite from "./components/ReviewWrite.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Footer from "./components/Footer.jsx";
 import CheckOutScreen from "./components/CheckOutScreen.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -143,6 +144,8 @@ function App() {
             removeFromWishlist={removeFromWishlist} />} />
 
           <Route path='/checkout' element={<CheckOutScreen/> } />
+
+          <Route path='/dashboard' element={<Dashboard />} />
 
         </Routes>
       </div>
