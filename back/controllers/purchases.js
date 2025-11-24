@@ -16,7 +16,8 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 			return {
 				product: [ product.id ],
 				totalPrice: lilP.price * product.quantity,
-				quantity: product.quantity
+				quantity: product.quantity,
+				purchaseDate: new Date()
 			}
 		})
 
@@ -26,16 +27,15 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 			purchaseSum: totalSum,
 			products: combined
 		}
-
-		console.log(purchase)
-
-		/*const order = new Order({
-			user: user.id,
+		// I will have order!!
+		const order = {
+			user: [ request.params.id ],
 			products: [
-
+				...purchase.products
 			]
-		})
-*/
+		}
+
+
 		/*user.purchaseHistory.push(purchase)
 
 		user.totalSpent += user.purchaseHistory.reduce((n, {purchaseSum}) => n + purchaseSum, 0)
