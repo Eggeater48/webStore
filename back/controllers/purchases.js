@@ -21,27 +21,14 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 			}
 		})
 
-		const totalSum = combined.reduce((n, {totalPrice}) => n + totalPrice, 0)
+		//const totalSum = combined.reduce((n, {totalPrice}) => n + totalPrice, 0)
+		// This could be used here but i dont see the vision at the moment
 
-		const purchase = {
-			purchaseSum: totalSum,
-			products: combined
-		}
-		// I will have order!!
-		const order = {
-			user: [ request.params.id ],
-			products: [
-				...purchase.products
-			]
-		}
-
-
-		/*user.purchaseHistory.push(purchase)
-
-		user.totalSpent += user.purchaseHistory.reduce((n, {purchaseSum}) => n + purchaseSum, 0)
-		user.totalPurchases += 1*/
-
-		//await user.save()
+		// I will have order!!!
+		const result = await Order.findOneAndUpdate({ user: request.params.id }, { products: combined }, {
+			new: true,
+			upsert: true
+		})
 
 		response.status(200).end()
 	} catch (error) {
@@ -49,23 +36,38 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 	}
 })
 
-// TODO rename this path to something else at some point
-purchaseRouter.get('/spent', async (request, response, next) => {
+purchaseRouter.get('/orders', async (request, response, next) => {
 	try {
-		const users = await User.find({})
-		const result = users.map((user) => {
-			return {
-				username: user.name,
-				spent: user.totalSpent,
-				purchaseCount: user.totalPurchases,
-				purchasedItems: user.purchaseHistory
-			}
-		})
+		const result = await Order
+			.find({})
+			.populate('user')
+			.populate({
+				path: 'products',
+				populate: { path: 'product' }
+			})
 
 		response.status(200).json(result).end()
 	} catch (error) {
 		next(error)
 	}
 })
+
+purchaseRouter.get('/orders/:id', async (request, response, next) => {
+	try {
+		const result = await Order
+			.findById(request.params.id)
+			.populate('user')
+			.populate({
+				path: 'products',
+				populate: { path: 'product' }
+			})
+
+		response.status(200).json(result).end()
+	} catch (error) {
+		next(error)
+	}
+})
+
+
 
 module.exports = purchaseRouter

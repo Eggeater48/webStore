@@ -53,12 +53,17 @@ Authorization: {{superSecretBearerToken}}
 {
   "products": [
     {
-      "id": "690e051dee2e7357665a61cc",
-      "quantity": 2
+      "id": "690e051dee2e7357665a61d3",
+      "quantity": 4
     },
     {
-      "id": "690e051dee2e7357665a61ce",
-      "quantity": 1
+      "id": "690e051dee2e7357665a61d0",
+      "quantity": 6
     }
   ]
 }
+
+### get all users purchasehistory
+# @name getHistory
+GET localhost:3000/api/purchases/orders
+Authorization: {{superSecretBearerToken}}

@@ -6,7 +6,6 @@ const getAll = async () => {
 	return response.data
 }
 
-// tbh i could implement like a dashboard that includes adding new products, product management and product selling statistics
 const addNew = async newProduct => {
 	const token = 3 // Fix this at some point
 	const response = await axios.post(`${baseUrl}/addNew`, newProduct, {
@@ -18,4 +17,4 @@ const addNew = async newProduct => {
 	return response.data
 }
 
-export default { getAll }
+export default { getAll, addNew }
