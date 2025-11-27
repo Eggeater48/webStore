@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
 	},
 	products: [
 		{
-			product: [
+			productData: [
 				{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }
 			],
 			quantity: Number,
@@ -15,6 +15,7 @@ const orderSchema = new mongoose.Schema({
 			purchaseDate: Date
 		}
 	],
+	status: String
 }, { timestamps: true })
 
 orderSchema.set('toJSON', {

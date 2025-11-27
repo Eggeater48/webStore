@@ -14,23 +14,25 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 				.find(p => p.id === product.id)
 
 			return {
-				product: [ product.id ],
+				productData: [ product.id ],
 				totalPrice: lilP.price * product.quantity,
 				quantity: product.quantity,
 				purchaseDate: new Date()
 			}
 		})
 
-		//const totalSum = combined.reduce((n, {totalPrice}) => n + totalPrice, 0)
-		// This could be used here but i dont see the vision at the moment
-
-		// I will have order!!!
-		const result = await Order.findOneAndUpdate({ user: request.params.id }, { products: combined }, {
+		// I will have order!!! (Yes status will be hardcoded for now..)
+		const result = await Order.findOneAndUpdate({ user: request.params.id }, { products: combined, status: "Processing" }, {
 			new: true,
 			upsert: true
 		})
 
-		response.status(200).end()
+		const user = await User.findById(request.params.id)
+
+		user.orders = user.orders.concat(result._id)
+		await user.save()
+
+		response.status(200).json(result).end()
 	} catch (error) {
 		next(error)
 	}
@@ -68,6 +70,21 @@ purchaseRouter.get('/orders/:id', async (request, response, next) => {
 	}
 })
 
+purchaseRouter.put('/orders/:id', async (request, response, next) => {
+	try {
+		const result = await Order.findByIdAndUpdate(
+			request.params.id,
+			request.body
+		).populate('user')
+			.populate({
+				path: 'products',
+				populate: { path: 'product' }
+			})
 
+		response.status(200).json(result).end()
+	} catch (error) {
+		next(error)
+	}
+})
 
 module.exports = purchaseRouter

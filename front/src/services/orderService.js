@@ -20,7 +20,6 @@ const checkOut = async details => {
 				'Authorization' : `Bearer `
 			}
 		})
-
 	return response.data
 }
 

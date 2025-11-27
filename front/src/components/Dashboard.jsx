@@ -11,7 +11,7 @@ const Dashboard = () => {
 	const [orders, setOrders] = useState(null)
 
 	useEffect(() => {
-		if (!user) {
+		if (!user) { // TODO add somehing smarter and better here cuz
 			navigate('/login', { state: { pathname: "/dashboard" } })
 		}
 	}, [])
@@ -23,17 +23,23 @@ const Dashboard = () => {
 
 	return (
 		<div className={""}>
-			<div className={""}>
-				Products section
-			</div>
+			<button
+				className={""}
+				onClick={() => {}}>
+				Products
+			</button>
 
-			<div className={""}>
-				User handling section
-			</div>
+			<button
+				className={""}
+				onClick={() => {}}>
+				Users
+			</button>
 
-			<div className={""}>
-				Order handling
-			</div>
+			<button
+				className={""}
+				onClick={() => {}}>
+				Orders
+			</button>
 		</div>
 	)
 }
