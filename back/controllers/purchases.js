@@ -72,10 +72,8 @@ purchaseRouter.get('/orders/:id', async (request, response, next) => {
 
 purchaseRouter.put('/orders/:id', async (request, response, next) => {
 	try {
-		const result = await Order.findByIdAndUpdate(
-			request.params.id,
-			request.body
-		).populate('user')
+		const result = await Order.findByIdAndUpdate(request.params.id, request.body)
+			.populate('user')
 			.populate({
 				path: 'products',
 				populate: { path: 'product' }

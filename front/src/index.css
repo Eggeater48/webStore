@@ -19,12 +19,15 @@
     .evil-border-outline-shadow {
         @apply border border-neutral-200 shadow hover:border-neutral-300 hover:shadow-neutral-400;
     },
-    .r
 
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active{
         -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+
+    .dashboard-button {
+        @apply appearance-none rounded-md w-80 h-40 has-checked:bg-neutral-300
     }
 }

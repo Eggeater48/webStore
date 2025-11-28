@@ -9,6 +9,7 @@ const Dashboard = () => {
 	const user = useSelector(state => state.user)
 	const navigate = useNavigate()
 	const [orders, setOrders] = useState(null)
+	const [whatsShown, setWhatsShown] = useState(null)
 
 	useEffect(() => {
 		if (!user) { // TODO add somehing smarter and better here cuz
@@ -23,23 +24,40 @@ const Dashboard = () => {
 
 	return (
 		<div className={""}>
-			<button
-				className={""}
-				onClick={() => {}}>
-				Products
-			</button>
+			<div className={"flex flex-col gap-4"}>
+				<input
+					type={"radio"}
+					className={"dashboard-button "}
+					value={"users"}
+					onChange={({target}) => setWhatsShown(target.value)}
+					id={"users"}
+				/>
+				<label htmlFor={""} className={""}>
 
-			<button
-				className={""}
-				onClick={() => {}}>
-				Users
-			</button>
+				</label>
 
-			<button
-				className={""}
-				onClick={() => {}}>
-				Orders
-			</button>
+				<input
+					type={"radio"}
+					className={"dashboard-button "}
+					value={"products"}
+					onChange={({target}) => setWhatsShown(target.value)}
+					id={"products"}
+				/>
+				<label htmlFor={""} className={""}>
+
+				</label>
+
+				<input
+					type={"radio"}
+					className={"dashboard-button "}
+					value={"orders"}
+					onChange={({target}) => setWhatsShown(target.value)}
+					id={"orders"}
+				/>
+				<label htmlFor={""} className={""}>
+
+				</label>
+			</div>
 		</div>
 	)
 }
