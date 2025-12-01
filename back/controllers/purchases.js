@@ -57,14 +57,14 @@ purchaseRouter.get('/orders', async (request, response, next) => {
 purchaseRouter.get('/orders/:id', async (request, response, next) => {
 	try {
 		const result = await Order
-			.findById(request.params.id)
+			.find({ user: request.params.id })
 			.populate('user')
 			.populate({
 				path: 'products',
 				populate: { path: 'product' }
 			})
 
-		response.status(200).json(result).end()
+		response.status(200).json(result[0]).end()
 	} catch (error) {
 		next(error)
 	}

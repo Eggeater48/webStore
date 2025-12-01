@@ -8,8 +8,8 @@ const getAllOrders = async () => {
 	return response.data
 }
 
-const getSpecificOrder = async orderId => {
-	const response = await axios.get(`${baseURL}/orders/${orderId}`)
+const getUserOrderHistory = async userId => {
+	const response = await axios.get(`${baseURL}/orders/${userId}`)
 	return response.data
 }
 
@@ -23,4 +23,4 @@ const checkOut = async details => {
 	return response.data
 }
 
-export default { getAllOrders, getSpecificOrder, checkOut }
+export default { getAllOrders, getUserOrderHistory, checkOut }

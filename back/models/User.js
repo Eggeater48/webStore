@@ -35,17 +35,15 @@ const userSchema = new mongoose.Schema({
 			ref: "Order"
 		}
 	],
+	phoneNumber: String,
+	birthday: Date,
 	passwordHash: String,
 	addressSettings: {
 		country: String,
-		firstName: String,
-		lastName: String,
 		address: String,
 		stateProvince: String,
 		city: String,
 		zipCode: String,
-		phoneNumber: String,
-		birthday: Date
 	}
 })
 
