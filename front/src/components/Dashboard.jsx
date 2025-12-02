@@ -27,6 +27,7 @@ const Dashboard = () => {
 		console.log(update)
 	}
 
+	// TODO maybe change the "shipping address" form fields around a little or position them in a cool way
 	return (
 		<div className={""}>
 			<div className={"flex flex-col gap-4"}>
@@ -97,58 +98,62 @@ const Dashboard = () => {
 					Shipping details
 				</div>
 
-				<div className={""}>
+				<div className={"flex flex-col gap-4"}>
 					<Form onSubmit={updateUserInfo} render={({ handleSubmit, submitting, pristine }) => (
 						<form onSubmit={handleSubmit}>
 							<div>
-								<label></label>
+								<label>Shipping Address</label>
 								<Field
-									name={""}
+									name={"address"}
 									component={"input"}
 									type={"text"}
-									placeholder={""}
+									placeholder={user.addressSettings.address}
 								/>
 							</div>
 
 							<div>
-								<label></label>
+								<label>Zipcode</label>
 								<Field
-									name={""}
+									name={"zipCode"}
 									component={"input"}
 									type={"text"}
-									placeholder={""}
+									placeholder={user.addressSettings.zipCode}
 								/>
 							</div>
 
 							<div>
-								<label></label>
+								<label>City</label>
 								<Field
-									name={""}
+									name={"city"}
 									component={"input"}
 									type={"text"}
-									placeholder={""}
+									placeholder={user.addressSettings.city}
 								/>
 							</div>
 
 							<div>
-								<label></label>
+								<label>Country</label>
 								<Field
-									name={""}
+									name={"country"}
 									component={"input"}
 									type={"text"}
-									placeholder={""}
+									placeholder={user.addressSettings.country}
 								/>
 							</div>
 
 							<div>
-								<label></label>
+								<label>State province</label>
 								<Field
-									name={""}
+									name={"stateProvince"}
 									component={"input"}
 									type={"text"}
-									placeholder={""}
+									placeholder={user.addressSettings.stateProvince}
 								/>
 							</div>
+
+							<button className={""} type={'submit'} disabled={submitting || pristine}>
+								Save
+							</button>
 						</form>
 					)}
 					/>

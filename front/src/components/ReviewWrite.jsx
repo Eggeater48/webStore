@@ -23,14 +23,13 @@ const reviewWrite = () => {
             <div className={''}>
               <label>Rating</label>
               <Field
-                name={'rating'}
-                component={'input'}
-                type={'range'}
-                min={'1'}
-                max={'5'}
-                step={'1'}
-                defaultValue={'3'}
-              />
+                name={'rating'}>
+                {props => (
+                  <div>
+                    <input  />
+                  </div>
+                )}
+              </Field>
             </div>
 
             <div className={''}>

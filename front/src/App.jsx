@@ -108,6 +108,7 @@ function App() {
     ? productList.find(product => product.id === match.params.id)
     : null
 
+  // TODO add the poor footer back at some point and fix its positioning
   return (
     <div className={'w-screen h-screen '}>
       <div className={"p-10"}>

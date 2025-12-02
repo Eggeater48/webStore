@@ -37,6 +37,10 @@ const NavBar = () => {
 				<button onClick={onWishList} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
 					Wishlist
 				</button>
+
+				<button onClick={() => navigate('/dashboard')} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+					Account
+				</button>
 			</div>
 
 		</div>
