@@ -8,6 +8,7 @@ import { Field, Form } from "react-final-form"
 
 const Dashboard = () => {
 	const user = useSelector(state => state.user)
+	const products = useSelector(state => state.user)
 	const navigate = useNavigate()
 	const [orders, setOrders] = useState(null)
 	const [whatsShown, setWhatsShown] = useState(null)

@@ -54,6 +54,21 @@ purchaseRouter.get('/orders', async (request, response, next) => {
 	}
 })
 
+purchaseRouter.get('/orders/test', async (request, response, next) => {
+	try {
+		const result = await Order.find({})
+		const purchasedProducts = result.map(order => {
+			return order.products
+		})
+
+		console.log(purchasedProducts)
+
+		response.json(result).status(200).end()
+	} catch (error) {
+		next(error)
+	}
+})
+
 purchaseRouter.get('/orders/:id', async (request, response, next) => {
 	try {
 		const result = await Order
@@ -84,5 +99,7 @@ purchaseRouter.put('/orders/:id', async (request, response, next) => {
 		next(error)
 	}
 })
+
+
 
 module.exports = purchaseRouter

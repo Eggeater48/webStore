@@ -71,3 +71,7 @@ Authorization: {{superSecretBearerToken}}
 ### Get orders from a specific user
 # @name GetUserOrderHistory
 GET localhost:3000/api/purchases/orders/690b13cebe4619050e62d457
+
+### Test thing
+# @name Test
+GET localhost:3000/api/purchases/orders/test

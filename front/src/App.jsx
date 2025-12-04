@@ -147,7 +147,6 @@ function App() {
           <Route path='/checkout' element={<CheckOutScreen/> } />
 
           <Route path='/dashboard' element={<Dashboard />} />
-
         </Routes>
       </div>
     </div>
