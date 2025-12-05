@@ -72,6 +72,17 @@ Authorization: {{superSecretBearerToken}}
 # @name GetUserOrderHistory
 GET localhost:3000/api/purchases/orders/690b13cebe4619050e62d457
 
-### Test thing
-# @name Test
-GET localhost:3000/api/purchases/orders/test
+### Change a products data
+# @name changeProduct
+PUT localhost:3000/api/products/addReview/{{productId}}
+Content-Type: application/json
+Authorization: {{superSecretBearerToken}}
+
+{
+  "rating": 4,
+  "comment": "guh",
+  "date": "2025-04-30T09:41:02.053Z",
+  "reviewerName": "Greg",
+  "reviewerEmail": "greg@greg.com",
+  "userId": "690b13cebe4619050e62d457"
+}

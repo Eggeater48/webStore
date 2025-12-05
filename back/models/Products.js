@@ -28,7 +28,11 @@ const productSchema = new mongoose.Schema({
 		qrCode: String
 	},
 	images: [],
-	thumbnail: String
+	thumbnail: String,
+	purchaseCount: {
+		type: Number,
+		default: 0
+	}
 }, {
 	timestamps: true
 })

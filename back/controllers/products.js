@@ -4,14 +4,14 @@ const Product = require('../models/Products')
 // Middleware import goes here (mainly needed for token verification)
 
 /*
-Gets all the products
+Gets all the products, sorted by the most purchased by default
 @auth none
 @route GET /api/products/getAll
 @return [ { product1 }, { product2 } ... ]
 */
 
 productRouter.get('/getAll', async (request, response) => {
-	const result = await Product.find({})
+	const result = await Product.find({}).sort({ purchaseCount: -1 })
 	response.status(200).json(result)
 })
 
@@ -43,6 +43,22 @@ Change an existing items data
 productRouter.put('/changeItem/:id', async (request, response) => {
 	await Product.findByIdAndUpdate(request.params.id, request.body)
 	response.status(200).end()
+})
+
+/*
+Adds a new review
+@auth none
+@route Put
+*/
+productRouter.put('/addReview/:id', async (request, response, next) => {
+	try {
+		const product = await Product.findById(request.params.id, {}, {})
+		product.reviews.push(request.body)
+		await product.save()
+		response.status(201).end()
+	} catch (error) {
+		next(error)
+	}
 })
 
 module.exports = productRouter

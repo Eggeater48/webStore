@@ -8,7 +8,7 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 	try {
 		const productIds = request.body.products.map(product => product.id)
 		const products = await Product.find({ '_id': { $in: productIds } })
-
+		await Product.updateMany({ '_id': { $in: productIds }}, { $inc: { stock: -1, purchaseCount: 1 } })
 		const combined = request.body.products.map(product => {
 			const lilP = products
 				.find(p => p.id === product.id)
@@ -21,7 +21,6 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 			}
 		})
 
-		// I will have order!!! (Yes status will be hardcoded for now..)
 		const result = await Order.findOneAndUpdate({ user: request.params.id }, { products: combined, status: "Processing" }, {
 			new: true,
 			upsert: true
@@ -30,7 +29,7 @@ purchaseRouter.post('/checkout/:id', async (request, response, next) => {
 		const user = await User.findById(request.params.id)
 
 		user.orders = user.orders.concat(result._id)
-		await user.save()
+		//await user.save()
 
 		response.status(200).json(result).end()
 	} catch (error) {
@@ -49,21 +48,6 @@ purchaseRouter.get('/orders', async (request, response, next) => {
 			})
 
 		response.status(200).json(result).end()
-	} catch (error) {
-		next(error)
-	}
-})
-
-purchaseRouter.get('/orders/test', async (request, response, next) => {
-	try {
-		const result = await Order.find({})
-		const purchasedProducts = result.map(order => {
-			return order.products
-		})
-
-		console.log(purchasedProducts)
-
-		response.json(result).status(200).end()
 	} catch (error) {
 		next(error)
 	}

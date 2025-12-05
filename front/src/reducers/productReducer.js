@@ -8,11 +8,6 @@ const productSlice = createSlice({
 		setProducts(state, action) {
 			return action.payload
 		},
-/*		addReview(state, action) {
-			return state.map(product => {
-
-			})
-		}*/
 	}
 })
 
