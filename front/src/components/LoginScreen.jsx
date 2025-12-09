@@ -33,20 +33,27 @@ const LoginScreen = () => {
 	return (
 		<Form
 			onSubmit={handleLogin}
+			validate={values => {
+				const errors = {}
+				if (!values.userDetails) {
+					errors.userDetails = 'Required'
+				}
+				if (!values.password) {
+					errors.password = 'Required'
+				}
+			}}
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
-				<form
-					onSubmit={handleSubmit}
-					className={'flex justify-center items-center flex-col align-middle mt-12'}>
+				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle mt-12'}>
 					{errorMessage &&
 					<div className={'text-red-500'}>{errorMessage}</div>
 					}
 					
 					<div>
 						<Field
-							name={'username'}
+							name={'userDetails'}
 							component={'input'}
 							type={'text'}
-							placeholder={'Username'}
+							placeholder={'Username or Email'}
 							className={"evil-border-outline-shadow"}
 						/>
 					</div>

@@ -13,9 +13,10 @@ Lets you login
 */
 
 loginRouter.post('/', async (request, response) => {
-	const { username, password } = request.body
-	const user = await User.findOne({ username }).populate('wishlist')
-	// populate is basically just left join from sql
+	const { userDetails, password } = request.body
+	const user = await User.findOne({
+		$or: [ {email: userDetails}, {username: userDetails}  ]
+	} ).populate('wishlist') // populate is basically just left join from sql
 	const passwordCorrect = user === null
 		? false
 		: await bcrypt.compare(password, user.passwordHash)

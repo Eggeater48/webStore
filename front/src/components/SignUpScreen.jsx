@@ -26,6 +26,21 @@ const SignUpScreen = () => {
 	return (
 		<Form
 			onSubmit={handleSignUp}
+			validate={values => {
+				const errors = {}
+				if (!values.username) {
+					errors.username = 'Required'
+				}
+				if (!values.name) {
+					errors.name = 'Required'
+				}
+				if (!values.email) {
+					errors.email = 'Required'
+				}
+				if (!values.password) {
+					errors.password = 'Required'
+				}
+			}}
 			render={({ handleSubmit, form, submitting, pristine, values }) => (
 				<form onSubmit={handleSubmit} className={'flex justify-center items-center flex-col align-middle mt-12'}>
 					{errorMessage &&

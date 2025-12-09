@@ -159,16 +159,18 @@ const Dashboard = () => {
 					)}
 					/>
 				</div>
-
 			</div>
 
 			<div className={""}>
-				{orders.map(order =>
-					<div key={order.id} className={""}>
-						<div>{order.status}</div>
-						<div>{order.createdAt}</div>
-					</div>
-				)}
+				<div className={""}>Your orders!!</div>
+				<div className={"flex flex-col gap-4"}>
+					{orders.map(order =>
+						<div key={order.id} className={""}>
+							<div>{order.status}</div>
+							<div>{order.createdAt}</div>
+						</div>
+					)}
+				</div>
 			</div>
 
 		</div>

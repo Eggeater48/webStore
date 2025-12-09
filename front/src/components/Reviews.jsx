@@ -12,52 +12,52 @@ const Reviews = ({ productData, reviewAverage }) => {
 
 	const onNewReview = () => {
 		if (!user) {
-			navigate('/login', { state: {}})
+			navigate('/login', { state: { pathname: `/${productData.id}/review` }})
+		} else {
+			navigate(`/${productData.id}/review`)
 		}
 	}
 
 	return (
 		<div className={"flex flex-col"}>
 
-		<div>
-			<div className={"text-4xl"}>
-				Reviews
-			</div>
-
-			<div className={""}>
-				{reviewAverage(productData)}/5
-			</div>
-
-			<div className={"cursor-pointer"} onClick={onNewReview}>
-				Write a review
-			</div>
-
-			{productData.reviews.map((review)=>
-				<div className={'flex flex-col w-100 h-48 mt-24'}>
-					<div className={"bg-gray-700 w-full h-0.5 mb-5"}></div>
-
-					<div className={""}>
-						{review.reviewerName}
-					</div>
-
-					<div className={"absolute"}>
-						{review.date.split('T')[0]}
-					</div>
-
-					<div className={""}>
-						{review.rating}/5
-					</div>
-
-					<div className={""}>
-						{review.comment}
-					</div>
-
+			<div>
+				<div className={"text-4xl"}>
+					Reviews
 				</div>
-			)}
-			<div className={"bg-gray-700 w-full h-0.5"}></div>
 
+				<div className={""}>
+					{reviewAverage(productData)}/5
+				</div>
 
-		</div>
+				<div className={"cursor-pointer"} onClick={onNewReview}>
+					Write a review
+				</div>
+
+				{productData.reviews.map((review)=>
+					<div className={'flex flex-col w-100 h-48 mt-24'}>
+						<div className={"bg-gray-700 w-full h-0.5 mb-5"}></div>
+
+						<div className={""}>
+							{review.reviewerName}
+						</div>
+
+						<div className={"absolute"}>
+							{review.date.split('T')[0]}
+						</div>
+
+						<div className={""}>
+							{review.rating}/5
+						</div>
+
+						<div className={""}>
+							{review.comment}
+						</div>
+
+					</div>
+				)}
+				<div className={"bg-gray-700 w-full h-0.5"}></div>
+			</div>
 
 		</div>
 	)

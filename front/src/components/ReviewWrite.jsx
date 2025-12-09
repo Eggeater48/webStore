@@ -25,9 +25,28 @@ const reviewWrite = () => {
               <Field
                 name={'rating'}>
                 {props => (
-                  <div>
-                    <input  />
-                  </div>
+                  <fieldset className={""}>
+                    <legend>Ratings</legend>
+                    <label title={"1"}>
+                      <input type={"radio"} id={"star1"} name={"star1"} value={"1"} />
+                    </label>
+
+                    <label title={"2"}>
+                      <input type={"radio"} id={"star2"} name={"star2"} value={"2"} />
+                    </label>
+
+                    <label title={"3"}>
+                      <input type={"radio"} id={"star3"} name={"star3"} value={"3"} />
+                    </label>
+
+                    <label title={"4"}>
+                      <input type={"radio"} id={"star4"} name={"star4"} value={"4"} />
+                    </label>
+
+                    <label title={"5"}>
+                      <input type={"radio"} id={"star5"} name={"star5"} value={"5"} />
+                    </label>
+                  </fieldset>
                 )}
               </Field>
             </div>
@@ -44,20 +63,9 @@ const reviewWrite = () => {
 
             <button
               type={'submit'} disabled={submitting || pristine}
-              className={''}
-            >
-              Submit the thing
+              className={''}>
+              Submit review
             </button>
-
-            <button
-              type={"button"}
-              onClick={form.reset}
-              disabled={submitting || pristine}
-              className={''}
-            >
-              I reset the form!!
-            </button>
-
           </form>
         )}
       />
