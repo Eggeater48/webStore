@@ -17,4 +17,15 @@ const addNew = async newProduct => {
 	return response.data
 }
 
-export default { getAll, addNew }
+const newReview = async (review, productId) => {
+	const token = 3
+	const response = await axios.post(`${baseUrl}/addReview/${productId}`, review, {
+		headers: {
+			'Authorization': `Bearer ${token}`
+		}
+	})
+
+	return response.data
+}
+
+export default { getAll, addNew, newReview }

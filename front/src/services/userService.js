@@ -38,10 +38,18 @@ const removeProductFromWishlist = async (userId, productId) => {
 	return response.data
 }
 
+const removeUser = async (userId) => {
+	const response = await axios.delete(`${baseURL}/users/removeUser`, userId).catch(function (error) {
+		return error.response.data
+	})
+	return response.data
+}
+
 export default {
 	createNewUser,
 	changeUser,
 	login,
 	addProductToWishlist,
 	removeProductFromWishlist,
+	removeUser,
 }

@@ -5,11 +5,14 @@ import { useSelector } from "react-redux";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { Field, Form } from "react-final-form"
+import { useDispatch } from "react-redux";
+import {clearUser} from "../reducers/userReducer.js";
 
 const Dashboard = () => {
 	const user = useSelector(state => state.user)
 	const products = useSelector(state => state.user)
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	const [orders, setOrders] = useState(null)
 	const [whatsShown, setWhatsShown] = useState(null)
 
@@ -21,11 +24,18 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		const result = orderService.getUserOrderHistory(user.id)
-		setOrders(result)
+		dispatch(setOrders(result))
 	}, [])
 
 	const updateUserInfo = (update) => {
 		console.log(update)
+	}
+
+	const onDelete = async (userId) => {
+		if (window.confirm("Are you sure you want to delete your user")) {
+			await userService.removeUser(userId)
+			dispatch(clearUser())
+		}
 	}
 
 	// TODO maybe change the "shipping address" form fields around a little or position them in a cool way
@@ -171,6 +181,11 @@ const Dashboard = () => {
 						</div>
 					)}
 				</div>
+			</div>
+
+			<div className={"flex flex-col"}>
+				<div className={""}>Delete user!!</div>
+				<button onClick={onDelete} className={"bg-red-600 text-white rounded-md"}>Delete user...</button>
 			</div>
 
 		</div>

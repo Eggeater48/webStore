@@ -90,4 +90,14 @@ userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, nex
 	}
 })
 
+userRouter.delete('/removeUser', async (request, response, next) => {
+	try {
+		console.log(request.body.id)
+		await User.findByIdAndDelete(request.body.id)
+		response.status(204).end()
+	} catch (error) {
+		next(error)
+	}
+})
+
 module.exports = userRouter
