@@ -92,9 +92,20 @@ userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, nex
 
 userRouter.delete('/removeUser', async (request, response, next) => {
 	try {
-		console.log(request.body.id)
 		await User.findByIdAndDelete(request.body.id)
 		response.status(204).end()
+	} catch (error) {
+		next(error)
+	}
+})
+
+userRouter.get('/getAll', async (request, response, next) => {
+	try {
+		const result = await User.find({}).select(["-passwordHash", ])
+			.populate('wishlist')
+			.populate('orders')
+
+		response.status(200).json(result).end()
 	} catch (error) {
 		next(error)
 	}

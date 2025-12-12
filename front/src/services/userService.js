@@ -45,6 +45,13 @@ const removeUser = async (userId) => {
 	return response.data
 }
 
+const getAllUsers = async () => {
+	const response = await axios.get(`${baseURL}/users/getAll`).catch(function (error) {
+		return error.response.data
+	})
+	return response.data
+}
+
 export default {
 	createNewUser,
 	changeUser,
@@ -52,4 +59,5 @@ export default {
 	addProductToWishlist,
 	removeProductFromWishlist,
 	removeUser,
+	getAllUsers
 }

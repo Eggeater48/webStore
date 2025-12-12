@@ -30,7 +30,7 @@ POST localhost:3000/api/login
 Content-Type: application/json
 
 {
-  "username": "Grög",
+  "userDetails": "greg@greg.com",
   "password": "123456"
 }
 
@@ -58,7 +58,7 @@ Authorization: {{superSecretBearerToken}}
     },
     {
       "id": "690e051dee2e7357665a61d0",
-      "quantity": 6
+      "quantity": 61
     }
   ]
 }
@@ -86,3 +86,17 @@ Authorization: {{superSecretBearerToken}}
   "reviewerEmail": "greg@greg.com",
   "userId": "690b13cebe4619050e62d457"
 }
+
+### Delete an user
+# @name deleteUser
+DELETE localhost:3000/api/users/removeUser
+Content-Type: application/json
+
+{
+  "id": "68ee3284fe27c7d059b917f8"
+}
+
+### Get all the users
+# @name GetAll
+GET localhost:3000/api/users/getAll
+
