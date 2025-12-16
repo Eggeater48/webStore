@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import userService from "../services/userService.js";
 import products from "../services/products.js";
 import {Form, Field} from "react-final-form";
+import AdminDashboardNewProduct from "./AdminDashboardNewProduct.jsx";
 
 // This whole thing should be in a separate react app to be honest..
 const AdminDashboard = () => {
@@ -76,73 +77,7 @@ const AdminDashboard = () => {
 				)}
 			</div>
 
-			<div className={"flex flex-col gap-4"}>
-				<div className={""}>
-					Add a new product
-				</div>
-
-				<!-- This is gonna look so ugly!! esp with react final form  -->
-				<Form onSubmit={addNewProduct} render={({ handleSubmit, form, submitting, pristine, values }) => (
-					<form onSubmit={handleSubmit}>
-						<div className={''}>
-							<Field
-								name={'title'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Title..'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'description'}
-								component={'input'}
-								type={'text'}
-								placeholder={'The description..'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'category'}
-								component={'input'}
-								type={'text'}
-								placeholder={''}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'price'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Price'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						Price
-						DiscountPercentage
-						Rating
-						Stock
-						tags [ "" ]
-						sku
-						weight
-						dimensions {width, height, depth}
-						warrantyInformation
-						shippingInformation
-						availabilityStatus
-						returnPolicy
-						images [ url here ]
-						purchaseCount
-					</form>
-				)}
-				/>
-
-			</div>
+			<AdminDashboardNewProduct addNewProduct={addNewProduct} />
 
 		</div>
 	)
