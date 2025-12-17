@@ -19,8 +19,8 @@ import ReviewWrite from "./components/ReviewWrite.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Footer from "./components/Footer.jsx";
 import CheckOutScreen from "./components/CheckOutScreen.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import AdminDashboard from "./components/AdminDashboard.jsx";
+import Dashboard from "../../dashboard/dashboard/src/components/Dashboard.jsx";
+import AdminDashboard from "../../dashboard/dashboard/src/components/AdminDashboard.jsx";
 
 //TODO change the import order cuz its kinda disturbing right now
 
