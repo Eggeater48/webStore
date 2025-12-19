@@ -30,13 +30,12 @@ const ProductData = () => {
 							Modify this product?
 						</button>
 
-						<button onClick={""}>
+						<button className={""} onClick={}>
 							Delete this product?
 						</button>
 					</div>
 				)}
 			</div>
-
 		</div>
 	)
 }
