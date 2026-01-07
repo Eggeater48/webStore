@@ -3,13 +3,79 @@ const bcrypt = require('bcryptjs')
 const userRouter = require('express').Router()
 const User = require('../models/User')
 
-/*
-Creates a new user
-@auth none
-@route POST /api/users/createNew
-@body { username, name, email, password }
-@return { username, name, id, email, passwordHash }
-*/
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: handles user data
+ */
+
+/**
+ * @swagger
+ * /api/users/createNew:
+ *   post:
+ *     summary: Create a new user
+ *     description: Creates a new user account with a hashed password.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: "Grög"
+ *               name:
+ *                 type: string
+ *                 example: "Greg"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "greg@greg.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 5
+ *                 example: "123456"
+ *     responses:
+ *       201:
+ *         description: User successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "690e051dee2e7357665a61d0"
+ *                 username:
+ *                   type: string
+ *                   example: "Grög"
+ *                 name:
+ *                   type: string
+ *                   example: "Greg"
+ *                 email:
+ *                   type: string
+ *                   example: "greg@greg.com"
+ *                 wishlist:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 addressSettings:
+ *                   type: object
+ *       400:
+ *         description: Password too short or invalid request body
+ *       500:
+ *         description: Server error
+ */
 
 userRouter.post('/createNew', async (request, response, next) => {	
 	try {
@@ -38,13 +104,58 @@ userRouter.post('/createNew', async (request, response, next) => {
 	}
 })
 
-/*
-USed for adding the users address deets during the buying phase
-@auth none (there for real should be alot of auth but its kind hard to implement and i dont wanna)
-@route PUT /api/users/change/:id
-@body { object with all the deets }
-@return { updated cooler user object }
+/**
+ * @swagger
+ * /api/users/change/{id}:
+ *   put:
+ *     summary: Update user address settings
+ *     description: Updates the address settings of a user by user ID.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the user
+ *         schema:
+ *           type: string
+ *           example: "690e051dee2e7357665a61d0"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             description: Address settings object
+ *             example:
+ *               street: "Main Street 12"
+ *               city: "Stockholm"
+ *               postalCode: "12345"
+ *               country: "Sweden"
+ *     responses:
+ *       201:
+ *         description: User address settings successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 addressSettings:
+ *                   type: object
+ *       400:
+ *         description: Invalid request body or user ID
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
  */
+
 userRouter.put('/change/:id', async (request, response, next) => {
 	try {
 		const user = await User.findByIdAndUpdate(request.params.id, { addressSettings: request.body })
@@ -55,14 +166,115 @@ userRouter.put('/change/:id', async (request, response, next) => {
 	}
 })
 
-/*
-Adds an item to the wishlist array of the user
-@auth none
-@route POST /api/users/addToWishlist/:id
-@body { userID }
-@return { updated user object }
-*/
-// There probably should be some auth here but...
+/**
+ * @swagger
+ * /api/users/changeDetails/{id}:
+ *   put:
+ *     summary: Updates the users general details
+ *     description: Updates the general details of an user by user ID.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the user
+ *         schema:
+ *           type: string
+ *           example: "690e051dee2e7357665a61d0"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             description: User details object
+ *             example:
+ *               email: "grög@greg.com"
+ *               name: "grog"
+ *               username: "greggrog"
+ *     responses:
+ *       201:
+ *         description: User details successfully changed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 addressSettings:
+ *                   type: object
+ *       400:
+ *         description: Invalid request body or user ID
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+userRouter.put('/changeDetails/:id', async (request, response, next) => {
+	try {
+		const user = await User.findByIdAndUpdate(request.params.id, request.body)
+		response.status(201).json(user)
+	} catch (error) {
+		next(error)
+	}
+})
+
+/**
+ * @swagger
+ * /api/users/addToWishlist/{userId}/{id}:
+ *   post:
+ *     summary: Add a product to a user's wishlist
+ *     description: Adds a product to the user's wishlist and returns the updated user with the wishlist populated.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: Unique identifier of the user
+ *         schema:
+ *           type: string
+ *           example: "690e051dee2e7357665a61d0"
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the product to add to the wishlist
+ *         schema:
+ *           type: string
+ *           example: "690e0a4bee2e7357665a61f2"
+ *     responses:
+ *       201:
+ *         description: Product successfully added to wishlist
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 wishlist:
+ *                   type: array
+ *                   description: Populated list of products in the wishlist
+ *                   items:
+ *                     type: object
+ *       400:
+ *         description: Invalid user ID or product ID
+ *       404:
+ *         description: User or product not found
+ *       500:
+ *         description: Server error
+ */
+
 userRouter.post('/addToWishlist/:userId/:id', async (request, response) => {
 	const user = await User.findById(request.params.userId)
 	user.wishlist.push(request.params.id)
@@ -76,7 +288,40 @@ userRouter.post('/addToWishlist/:userId/:id', async (request, response) => {
 	response.status(201).json(populatedUser)
 })
 
-// Once again implement the tokens, so user doesnt need to be sent in such a weird way
+/**
+ * @swagger
+ * /api/users/removeFromWishlist/{userId}/{id}:
+ *   post:
+ *     summary: Remove a product from a user's wishlist
+ *     description: Removes a product from the user's wishlist by product ID.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: Unique identifier of the user
+ *         schema:
+ *           type: string
+ *           example: "690e051dee2e7357665a61d0"
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique identifier of the product to remove from the wishlist
+ *         schema:
+ *           type: string
+ *           example: "690e0a4bee2e7357665a61f2"
+ *     responses:
+ *       200:
+ *         description: Product successfully removed from wishlist
+ *       400:
+ *         description: Invalid user ID or product ID
+ *       404:
+ *         description: User or product not found
+ *       500:
+ *         description: Server error
+ */
+
 userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, next) => {
 	try {
 		const user = await User.findById(request.params.userId)
@@ -90,6 +335,38 @@ userRouter.post('/removeFromWishlist/:userId/:id', async (request, response, nex
 	}
 })
 
+/**
+ * @swagger
+ * /api/users/removeUser:
+ *   delete:
+ *     summary: Delete a user
+ *     description: Deletes a user by ID.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: Unique identifier of the user to delete
+ *                 example: "690e051dee2e7357665a61d0"
+ *     responses:
+ *       204:
+ *         description: User successfully deleted (no content)
+ *       400:
+ *         description: Invalid user ID
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
 userRouter.delete('/removeUser', async (request, response, next) => {
 	try {
 		await User.findByIdAndDelete(request.body.id)
@@ -98,6 +375,46 @@ userRouter.delete('/removeUser', async (request, response, next) => {
 		next(error)
 	}
 })
+
+/**
+ * @swagger
+ * /api/users/getAll:
+ *   get:
+ *     summary: Get all users
+ *     description: Retrieves all users with their wishlist and orders populated, excluding password hashes.
+ *     tags:
+ *       - Users
+ *     responses:
+ *       200:
+ *         description: List of users successfully retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   username:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   wishlist:
+ *                     type: array
+ *                     description: Populated list of products in the wishlist
+ *                     items:
+ *                       type: object
+ *                   orders:
+ *                     type: array
+ *                     description: Populated list of user's orders
+ *                     items:
+ *                       type: object
+ *       500:
+ *         description: Server error
+ */
 
 userRouter.get('/getAll', async (request, response, next) => {
 	try {

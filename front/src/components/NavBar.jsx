@@ -1,11 +1,12 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {clearUser} from "../reducers/userReducer.js";
 
 const NavBar = () => {
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
 	const shoppingCart = useSelector((state) => state.shoppingCart)
-	// This could also be just passed as state
+	const dispatch = useDispatch()
 
 	const onWishList = () => {
 		if (!user) {
@@ -13,6 +14,19 @@ const NavBar = () => {
 		} else {
 			navigate("/wishlist")
 		}
+	}
+
+	const onAccount = () => {
+		if (!user) {
+			navigate("/login", { state: { pathname: "/dashboard" } })
+		} else {
+			navigate("/dashboard")
+		}
+	}
+
+	const onLogout = () => {
+		dispatch(clearUser())
+		navigate('/')
 	}
 
 	// The shopping cart length thing is kinda weird.. Could and should try improving it later
@@ -38,9 +52,18 @@ const NavBar = () => {
 					Wishlist
 				</button>
 
-				<button onClick={() => navigate('/dashboard')} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+				<button onClick={onAccount} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
 					Account
 				</button>
+
+				{user &&
+					<div>
+						<button onClick={onLogout} className={"cursor-pointer h-15 relative hover:text-zinc-500"}>
+							Logout
+						</button>
+					</div>
+				}
+
 			</div>
 
 		</div>

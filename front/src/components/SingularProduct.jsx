@@ -23,7 +23,7 @@ const SingularProduct = ({ reviewAverage, addToCart, addToWishlist, alsoLike, re
 
 	const cartAdder = (product) => {
 		console.log(product)
-		addToCart(product) // TODO NOTIFY USER
+		addToCart(product)
 	}
 
 	const onAddWishlist = (productId) => {

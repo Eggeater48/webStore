@@ -28,83 +28,82 @@ const ShoppingCart = () => {
 	)
 
 	const changeProductInCart = async (newProduct) => {
-		const result = dispatch(updateCart(newProduct))
-		console.log(result)
+		dispatch(updateCart(newProduct))
 	}
 
 	const removeFromCart = async (id) => {
-		const result = dispatch(removeItemFromCart(id))
-		console.log(result)
+		dispatch(removeItemFromCart(id))
 	}
 
 	return (
-		<div className={""}>
+		<div className={"mt-12"}>
 			{shoppingCartItems.length ?
 					<div className={"flex flex-col flex-wrap gap-6"}>
 						{shoppingCartItems.map(product =>
-							<div className={"w-3/4 outline-gray-300 h-48 outline-1 outline-solid grid grid-cols-3"}>
-								<img
-									className={"h-1/2 w-3/4 outline-1 outline-gray-300 outline-solid rounded-md self-center justify-self-center"}
-									src={product.thumbnail}
-									alt={product.title}/>
-
-								<div className={"flex flex-col gap-3 justify-self-center"}>
-									<div className={""}>
-										{product.title}
-									</div>
+							<div className={""}>
+								<div className={""}>
+									<img className={"w-20 h-20"} src={product.thumbnail} alt={product.title} />
 								</div>
 
-								<div className={"flex flex-row gap-4 self-center justify-self-center"}>
-									<div className={""}>
-										€{product.price}
-									</div>
+								<div className={""}>
+									{product.title}
+								</div>
 
-									<div className={"grid grid-cols-3 h-12 w-24 outline-1 outline-solid outline-gray-400 rounded-md"}>
-										{product.count === 1 ?
-											<button
-												onClick={() => removeFromCart(product.id)}
-												className={""}>
-												<img
-													className={"rounded-full w-4 h-4"}
-													src={"/src/assets/delete.svg"}
-													alt={"Remove from wishlist"}/>
-											</button>
-											:
-											<button
-												className={"text-center rounded-full w-4 h-4 "}
-												onClick={() => changeProductInCart({...product, count: product.count - 1})}>
-												-
-											</button>
-										}
+								<div className={""}>
+									{product.availabilityStatus}
+								</div>
 
-										<div className={"text-center"}>
-											{product.count}
-										</div>
+								<div className={""}>
+									{product.price}
+								</div>
 
+
+								<div
+									className={"flex flex-row justify-evenly h-12 w-24 outline-1 outline-solid outline-gray-400 rounded-md items-center align-middle"}>
+									{product.count === 1 ?
 										<button
-											className={"text-center "}
-											onClick={() => changeProductInCart({...product, count: product.count + 1})}>
-											+
+											onClick={() => removeFromCart(product.id)}
+											className={""}>
+											<img
+												className={"rounded-full w-4 h-4"}
+												src={"/src/assets/delete.svg"}
+												alt={"Remove from wishlist"}/>
 										</button>
+										:
+										<button
+											className={"text-center rounded-full w-4 h-4"}
+											onClick={() => changeProductInCart({...product, count: product.count - 1})}>
+											-
+										</button>
+									}
 
+									<div className={"text-center relative "}>
+										{product.count}
 									</div>
 
-								</div>
+									<button
+										className={"text-center "}
+										onClick={() => changeProductInCart({...product, count: product.count + 1})}>
+										+
+									</button>
 
+								</div>
 							</div>
 						)}
 
-						<div className={"border-neutral-300 border-1 rounded-md"}>
-							<div className={"flex flex-row gap-3"}>
-								<div className={""}>
-									{totalItemsInCart} products
-								</div>
-
+						<div className={"w-full border-black border-t-1 "}>
+							<div className={"flex gap-1 flex-row-reverse"}>
 								<div className={""}>
 									{sumOfItemInCart} total
 								</div>
-							</div>
 
+								<div className={""}>
+									{totalItemsInCart} {totalItemsInCart > 1 ? "products" : "product"},
+								</div>
+							</div>
+						</div>
+
+						<div className={""}>
 							<button
 								className={"bg-orange-500 rounded-md text-white w-72 h-12 text-2xl font-bold cursor-pointer"}
 								onClick={onCheckout}>

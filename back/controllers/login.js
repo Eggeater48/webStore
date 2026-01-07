@@ -4,14 +4,70 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
 
-/*
-Lets you login
-@auth none
-@route POST /api/login
-@body { username, password }
-@return { username, name, id, superSecretToken }
-*/
+/**
+ * @swagger
+ * tags:
+ *   name: LogIn
+ *   description: Handles login operations and such
+ */
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     summary: Log in a user
+ *     description: Authenticates a user using their username or email and password. Returns user data and a JWT token if successful.
+ *     tags:
+ *       - LogIn
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userDetails
+ *               - password
+ *             properties:
+ *               userDetails:
+ *                 type: string
+ *                 description: Username or email of the user
+ *                 example: "greg@greg.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: User's password
+ *                 example: "123456"
+ *     responses:
+ *       200:
+ *         description: Successfully authenticated, returns user data and JWT token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 id:
+ *                   type: string
+ *                 wishlist:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 superSecretToken:
+ *                   type: string
+ *                   description: JWT token valid for 1 hour
+ *                 addressSettings:
+ *                   type: object
+ *       401:
+ *         description: Invalid username/email or password
+ *       500:
+ *         description: Server error
+ */
 loginRouter.post('/', async (request, response) => {
 	const { userDetails, password } = request.body
 	const user = await User.findOne({
@@ -48,7 +104,8 @@ loginRouter.post('/', async (request, response) => {
 				id: user._id,
 				wishlist: user.wishlist,
 				superSecretToken: token,
-				addressSettings: user.addressSettings
+				addressSettings: user.addressSettings,
+				phoneNumber: user.phoneNumber
 			})
 })
 

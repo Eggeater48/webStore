@@ -14,11 +14,13 @@ const CheckOutScreen = ({  }) => {
 	const user = useSelector(state => state.user)
 	const dispatch = useDispatch()
 
+	// Calculates the sum of items in the cart (no way!!)
 	const sumOfItemInCart = location.state.reduce(
 		(total, item) => total + item.price * item.count,
 		0,
-	)
+	).toFixed(2)
 
+	// Calcs (slang for calculator) the total amount of items in the shopping cfart
 	const totalItemsInCart = location.state.reduce(
 		(totalCount, item) => totalCount + item.count,
 		0
@@ -26,7 +28,6 @@ const CheckOutScreen = ({  }) => {
 
 	const onSubmit = async values => {
 		const result = await userService.changeUser(user.id, values)
-		console.log(result)
 		setCurrentForm(true)
 	}
 
@@ -37,123 +38,89 @@ const CheckOutScreen = ({  }) => {
 		navigate("/")
 	}
 
+	// TODO change the product and total price location and look at some point
 	return (
 		<div>
-			<div className={"rounded-md text-white bg-red-500 text-center"}>
-				Not so secure Checkout
-			</div>
-			<div className={"flex flex-col"}>
-				{location.state.map((product) =>
-					<div className={""}>
-						{product.title} €{product.price * product.count} {product.count}
-					</div>
-				)}
-			</div>
-
-			<div className={"flex flex-row"}>
-				{sumOfItemInCart} {totalItemsInCart}
-			</div>
-
 			{!currentForm && <Form
 				onSubmit={onSubmit}
 				render={({ handleSubmit, form, submitting, pristine, values }) => (
-					<form onSubmit={handleSubmit}>
-						<div className={''}>
-							<Field
-								name={'country'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Country...'}
-								maxLength={'250'}
-							/>
+					<form onSubmit={handleSubmit} className={"flex justify-center items-center flex-col align-middle mt-12"}>
+						<div className={"flex flex-row justify-center items-center align-middle mt-12"}>
+							{totalItemsInCart} {totalItemsInCart > 1 ? "products" : "product"}, {sumOfItemInCart} total
 						</div>
 
-						<div className={''}>
-							<Field
-								name={'firstName'}
-								component={'input'}
-								type={'text'}
-								placeholder={'First name...'}
-								maxLength={'250'}
-							/>
+						<div className={"rounded-md border-1 border-solid border-neutral-400"}>
+							<div className={"flex flex-row gap-2 p-2"}>
+								<div className={''}>
+									<Field
+										name={'country'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Country...'}
+										maxLength={'250'}
+									/>
+								</div>
+
+								<div className={''}>
+									<Field
+										name={'address'}
+										component={'input'}
+										type={'text'}
+										placeholder={'address..'}
+										maxLength={'250'}
+									/>
+								</div>
+							</div>
+
+							<div className={"flex flex-row gap-2 p-2"}>
+								<div className={''}>
+									<Field
+										name={'stateProvince'}
+										component={'input'}
+										type={'text'}
+										placeholder={'State / Province..'}
+										maxLength={'250'}
+									/>
+								</div>
+
+								<div className={''}>
+									<Field
+										name={'city'}
+										component={'input'}
+										type={'text'}
+										placeholder={'City...'}
+										maxLength={'250'}
+									/>
+								</div>
+							</div>
+
+							<div className={"flex flex-row gap-2 p-2"}>
+								<div className={''}>
+									<Field
+										name={'zipCode'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Zip code...'}
+										maxLength={'250'}
+									/>
+								</div>
+
+								<div className={''}>
+									<Field
+										name={'phoneNumber'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Phone number...'}
+										maxLength={'250'}
+									/>
+								</div>
+							</div>
 						</div>
-
-						<div className={''}>
-							<Field
-								name={'lastName'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Last name...'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'address'}
-								component={'input'}
-								type={'text'}
-								placeholder={'address..'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'stateProvince'}
-								component={'input'}
-								type={'text'}
-								placeholder={'State / Province..'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'city'}
-								component={'input'}
-								type={'text'}
-								placeholder={'City...'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'zipCode'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Zip code...'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<div className={''}>
-							<Field
-								name={'phoneNumber'}
-								component={'input'}
-								type={'text'}
-								placeholder={'Phone number...'}
-								maxLength={'250'}
-							/>
-						</div>
-
-
 
 						<button
 							type={'submit'} disabled={submitting || pristine}
-							className={''}
-						>
-							Submit the thing
-						</button>
-
-						<button
-							type={"button"}
-							onClick={form.reset}
-							disabled={submitting || pristine}
-							className={''}
-						>
-							I reset the form!!
+							className={'mt-4 bg-orange-500 rounded-md text-white font-bold w-52 h-14'}>
+							Proceed to payment
 						</button>
 
 					</form>
@@ -163,62 +130,85 @@ const CheckOutScreen = ({  }) => {
 			{currentForm && <Form
 				onSubmit={onCardSubmit}
 				render={({ handleSubmit, form, submitting, pristine, values }) => (
-					<form onSubmit={handleSubmit}>
-						<div className={''}>
-							<Field
-								name={'cardNumber'}
-								component={'input'}
-								type={'text'}
-								placeholder={'1234 5678 9012 3456'}
-								maxLength={'250'}
-							/>
+					<form
+						onSubmit={handleSubmit}
+						className={"flex justify-center items-center flex-col align-middle"}>
+
+						<div className={"flex flex-col justify-center w-full items-center align-middle mt-12"}>
+							<div className={"rounded-md text-white bg-red-500 w-1/2 h-12 flex justify-center align-middle items-center"}>
+								<div className={"relative"}>
+									Not so secure checkout
+								</div>
+							</div>
+
+							<div className={"flex flex-row justify-center items-center align-middle mt-6"}>
+								{totalItemsInCart} {totalItemsInCart > 1 ? "products" : "product"}, {sumOfItemInCart} total
+							</div>
 						</div>
 
-						<div className={''}>
-							<Field
-								name={'expDate'}
-								component={'input'}
-								type={'text'}
-								placeholder={'MM/YY'}
-								maxLength={'250'}
-							/>
+						<div className={"rounded-md border-1 border-solid border-neutral-400 m-5 p-5"}>
+							<div className={""}>
+								<div className={'flex flex-row gap-2 hover:border-neutral-300 hover:shadow-neutral-400'}>
+									<Field
+										name={'cardNumber'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Bank card number*'}
+										maxLength={'250'}
+										className={"w-full rounded-1xl p-2 border-1 border-solid border-neutral-200"}
+									/>
+								</div>
+							</div>
+
+							<div className={"flex flex-row mt-2"}>
+								<div className={''}>
+									<Field
+										name={'expDate'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Expiration date*'}
+										maxLength={'250'}
+										className={"rounded-2xl p-2 border-1 border-solid border-neutral-200"}
+									/>
+								</div>
+
+								<div className={''}>
+									<Field
+										name={'superSecretCode'}
+										component={'input'}
+										type={'text'}
+										placeholder={'CVV/CVC*'}
+										maxLength={'250'}
+										className={"rounded-2xl p-2 border-1 border-solid border-neutral-200"}
+									/>
+								</div>
+
+								<div className={''}>
+									<Field
+										name={'cardHolder'}
+										component={'input'}
+										type={'text'}
+										placeholder={'Name on card*'}
+										maxLength={'250'}
+										className={"rounded-2xl p-2 border-1 border-solid border-neutral-200"}
+									/>
+								</div>
+							</div>
 						</div>
 
-						<div className={''}>
-							<Field
-								name={'superSecretCode'}
-								component={'input'}
-								type={'text'}
-								placeholder={'123'}
-								maxLength={'250'}
-							/>
+						<div className={"flex flex-col"}>
+							<div className={"text-xs text-neutral-700 top-2 relative"}>
+								I have read and agree to the <u>Privacy Policy</u>
+							</div>
+
+							<button
+								type={'submit'} disabled={submitting || pristine}
+								className={'rounded-md w-52 h-14 bg-blue-500 text-white font-bold mt-4'}>
+								Proceed to payment
+							</button>
+
 						</div>
 
-						<div className={''}>
-							<Field
-								name={'cardHolder'}
-								component={'input'}
-								type={'text'}
-								placeholder={'John Doe'}
-								maxLength={'250'}
-							/>
-						</div>
-
-						<button
-							type={'submit'} disabled={submitting || pristine}
-							className={''}
-						>
-							Submit the thing
-						</button>
-
-						<button
-							type={"button"}
-							onClick={form.reset}
-							disabled={submitting || pristine}
-							className={''}
-						>
-							I reset the form!!
-						</button>
 
 					</form>
 				)}

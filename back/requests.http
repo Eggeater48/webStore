@@ -100,4 +100,12 @@ Content-Type: application/json
 # @name GetAll
 GET localhost:3000/api/users/getAll
 
-dashb
+### update user general details
+# @name changeUserALil
+PUT localhost:3000/api/users/changeDetails/{{userId}}
+Content-Type: application/json
+Authorization: {{superSecretBearerToken}}
+
+{
+  "name": "gkordpgo"
+}

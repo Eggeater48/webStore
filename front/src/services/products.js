@@ -19,7 +19,7 @@ const addNew = async newProduct => {
 
 const newReview = async (review, productId) => {
 	const token = 3
-	const response = await axios.post(`${baseUrl}/addReview/${productId}`, review, {
+	const response = await axios.put(`${baseUrl}/addReview/${productId}`, review, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		}

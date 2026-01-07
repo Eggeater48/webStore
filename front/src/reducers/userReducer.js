@@ -9,7 +9,7 @@ const userSlice = createSlice({
 			return action.payload
 		},
 		clearUser(state) {
-			state.user = null
+			return null
 		},
 		setWishlist(state, action) {
 			state.wishlist = action.payload

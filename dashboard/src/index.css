@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+/* TODO fix the fonts later!! */
+
+@layer base {
+    body {
+        @font-face {
+            font-family: 'Droid Sans Mono';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+        }
+        overflow-x: hidden;
+    }
+}
+
+@layer components {
+    .evil-border-outline-shadow {
+        @apply border border-neutral-200 shadow hover:border-neutral-300 hover:shadow-neutral-400;
+    }
+
+    /* This is just here to remove the ugly yellow background from the autofilled input */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active{
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+
+    .dashboard-button {
+        @apply appearance-none rounded-md w-80 h-40 has-checked:bg-neutral-300
+    }
+
+}

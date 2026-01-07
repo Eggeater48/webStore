@@ -19,8 +19,10 @@ import ReviewWrite from "./components/ReviewWrite.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import Footer from "./components/Footer.jsx";
 import CheckOutScreen from "./components/CheckOutScreen.jsx";
-import Dashboard from "../../dashboard/dashboard/src/components/Dashboard.jsx";
-import AdminDashboard from "../../dashboard/dashboard/src/components/AdminDashboard.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+import DashboardOrders from "./components/DashboardOrders.jsx";
+import DashboardUserDetails from "./components/DashboardUserDetails.jsx";
+
 
 //TODO change the import order cuz its kinda disturbing right now
 
@@ -71,7 +73,6 @@ function App() {
       }))
     } else {
       dispatch(incrementItemCount(isItReallyInTheCart))
-      console.log(shoppingCart)
     }
   }
 
@@ -148,8 +149,8 @@ function App() {
           <Route path='/checkout' element={<CheckOutScreen/> } />
 
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/dashboard/admin' element={<AdminDashboard />} />
-
+          <Route path={'/dashboard/orders'} element={<DashboardOrders />} />
+          <Route path={'/dashboard/user'} element={<DashboardUserDetails />} />
         </Routes>
       </div>
     </div>

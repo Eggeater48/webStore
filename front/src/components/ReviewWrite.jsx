@@ -1,13 +1,25 @@
 import {Field, Form} from "react-final-form";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
+import products from "../services/products.js";
+
 
 const reviewWrite = () => {
   const navigate = useNavigate()
   const state = useLocation()
-
+  const user = useSelector(state => state.user)
 
   const onSubmit = async values => {
-    console.log(values)
+    const newReview = {
+      ...values,
+      reviewerName: user.name,
+      reviewerEmail: user.email,
+      date: new Date().toISOString()
+    }
+
+    await products.newReview(newReview, state.state.productData.id)
+
+    navigate(`/${state.state.productData.id}`)
 
   }
 
@@ -20,44 +32,26 @@ const reviewWrite = () => {
         onSubmit={onSubmit}
         render={({ handleSubmit, form, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit}>
-            <div className={''}>
+            <div className={'mt-20'}>
               <label>Rating</label>
               <Field
-                name={'rating'}>
-                {props => (
-                  <fieldset className={""}>
-                    <legend>Ratings</legend>
-                    <label title={"1"}>
-                      <input type={"radio"} id={"star1"} name={"star1"} value={"1"} />
-                    </label>
-
-                    <label title={"2"}>
-                      <input type={"radio"} id={"star2"} name={"star2"} value={"2"} />
-                    </label>
-
-                    <label title={"3"}>
-                      <input type={"radio"} id={"star3"} name={"star3"} value={"3"} />
-                    </label>
-
-                    <label title={"4"}>
-                      <input type={"radio"} id={"star4"} name={"star4"} value={"4"} />
-                    </label>
-
-                    <label title={"5"}>
-                      <input type={"radio"} id={"star5"} name={"star5"} value={"5"} />
-                    </label>
-                  </fieldset>
-                )}
+                name={'rating'}
+                component={"input"}
+                type={"number"}
+                min={"1"}
+                max={"5"}
+                className={"p-5"}
+                defaultValue={"1"}>
               </Field>
             </div>
 
             <div className={''}>
               <Field
                 name={'comment'}
-                component={'input'}
-                type={'text'}
+                component={"textarea"}
                 placeholder={'Comment..'}
                 maxLength={'250'}
+                className={"w-64 h-20 p-2"}
               />
             </div>
 

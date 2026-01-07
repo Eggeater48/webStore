@@ -45,10 +45,19 @@ const removeUser = async (userId) => {
 	return response.data
 }
 
-const getAllUsers = async () => {
-	const response = await axios.get(`${baseURL}/users/getAll`).catch(function (error) {
+const getUserOrderHistory = async (userId) => {
+	const response = await axios.get(`${baseURL}/purchases/orders/${userId}`).catch(function (error) {
 		return error.response.data
 	})
+
+	return response.data
+}
+
+const updateUserData = async (userId, update) => {
+	const response = await axios.put(`${baseURL}/users/changeDetails/${userId}`, update).catch(function (error) {
+		return error.response.data
+	})
+
 	return response.data
 }
 
@@ -59,5 +68,6 @@ export default {
 	addProductToWishlist,
 	removeProductFromWishlist,
 	removeUser,
-	getAllUsers
+	getUserOrderHistory,
+	updateUserData
 }
